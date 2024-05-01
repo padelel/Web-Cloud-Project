@@ -69,3 +69,22 @@ nav li:first-child{
 .sidebar a{
     width: 100%;
 }
+
+.menubutton{
+    display: none;
+}
+
+@media(max-width: 800px){
+    .hideonmobile{
+        display: none;
+    }
+    .menubutton{
+        display: block;
+    }
+}
+
+@media(max-width: 400px){
+    .sidebar{
+        width: 100%;
+    }
+}
