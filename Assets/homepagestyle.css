@@ -86,11 +86,64 @@ nav li:first-child{
 .arabica{
     text-align: justify;
     float: left;
-    margin-right: 10rem;
-    margin-left: 8rem;
+    margin-right: 30rem;
+    margin-left: 20rem;
+    padding-right: 10rem;
+    line-height: 1.5;
 }
 
 .arabica-image{
+    border-radius: 3px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+    float: right;
+    margin-left: 3rem;
+    margin-bottom: 5rem;
+}
+
+.robusta{
+    text-align: justify;
+    float: left;
+    margin-right: 30rem;
+    margin-left: 20rem;
+    padding-right: 10rem;
+    line-height: 1.5;
+}
+
+.robusta-image{
+    border-radius: 3px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+    float: right;
+    margin-left: 3rem;
+    margin-bottom: 5rem;
+}
+
+.liberica{
+    text-align: justify;
+    float: left;
+    margin-right: 30rem;
+    margin-left: 20rem;
+    padding-right: 10rem;
+    line-height: 1.5;
+}
+
+.liberica-image{
+    border-radius: 3px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+    float: right;
+    margin-left: 3rem;
+    margin-bottom: 5rem;
+}
+
+.excelsa{
+    text-align: justify;
+    float: left;
+    margin-right: 30rem;
+    margin-left: 20rem;
+    padding-right: 10rem;
+    line-height: 1.5;
+}
+
+.excelsa-image{
     border-radius: 3px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
     float: right;
