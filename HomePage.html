@@ -4,22 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brew Bounty</title>
-
-    <!---CSS Link-->
     <link rel="stylesheet" href="Assets/homepagestyle.css">
 </head>
 
 <body>
+
     <nav>
         <ul class="sidebar">
             <li onclick=closeSidebar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></a></li>
-            <li><a href="#">Recipe</a></li>
-            <li><a href="#">Order</a></li>
-            <li><a href="#">About Us</a></li>
+            <li class="nav-text"><a href="#">Recipe</a></li>
+            <li class="nav-text"><a href="#">Order</a></li>
+            <li class="nav-text"><a href="#">About Us</a></li>
         </ul>
 
         <ul>
-            <li><a href="#"><img height="55" src = "Assets/coffee-beans.png">Brew Bounty</a></li>
+            <li class="nav-brand"><a href="#"><img class="logo" height="50" src = "Assets/coffee-beans.png">Brew Bounty</a></li>
             <li class="hideonmobile"><a href="#">Recipe</a></li>
             <li class="hideonmobile"><a href="#">Order</a></li>
             <li class="hideonmobile"><a href="#">About Us</a></li>
@@ -27,20 +26,56 @@
         </ul>
     </nav>
 
-    <section class="container">
-        <div class="slider-wraper">
-            <div class="slider">
-                <img id="slide-1" src="Assets/slideshow1.jpg">
-                <img id="slide-2" src="Assets/slideshow2.jpg">
-                <img id="slide-3" src="Assets/slideshow3.jpg">
-            </div>
-            <div class="slider-nav">
-                <a href="#slide-1"></a>
-                <a href="#slide-2"></a>
-                <a href="#slide-3"></a>
-            </div>
-        </div>
-    </section>
+    <!-- Slideshow container -->
+<div class="slideshow-container">
+
+    <!-- Full-width images with number and caption text -->
+    <div class="mySlides fade">
+      <img src="Assets/slideshow1.jpg" style="width:100%">
+    </div>
+  
+    <div class="mySlides fade">
+      <img src="Assets/slideshow2.jpg" style="width:100%">
+    </div>
+  
+    <div class="mySlides fade">
+      <img src="Assets/slideshow3.jpg" style="width:100%">
+    </div>
+  
+    <!-- Next and previous buttons -->
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  </div>
+  <br>
+  
+  <!-- The dots/circles -->
+  <div style="text-align:center">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+  </div>
+
+  <hr>
+
+  <section class="welcome">
+    <h1 class="big-welcome">Welcome to Brew Bounty!</h1>
+    <p style="text-align:justify" class="welcome-text">Dive into the magic of coffee where each sip brings energy, clarity, and connection. Feel the fatigue melt away as productivity soars with every cup. Experience heightened focus and creativity, fostering meaningful interactions over shared moments and ideas. Embrace the wellness benefits of antioxidants while elevating culinary creations with coffee's rich flavor. Ready to embark on a journey of flavor, connection, and vitality? Join Brew Bounty today and let coffee awaken your senses!</p>
+  </section>
+
+  <hr>
+
+  <section class="beans-info">
+    <h1 style="font-size: larger; text-align: center;" class="beans-text">Exploring Coffee Beans: Varieties and Flavors</h1>
+    <div class="arabica">
+    <h2 style="font-size: large;">1. Arabica</h2>
+    <p><img class="arabica-image" width="200px" height="150px" src="Assets/arabica.jpg">Known for its smooth, nuanced flavor profile, Arabica beans are the most popular and widely cultivated type of coffee beans. They typically have a mild acidity and notes of fruit, chocolate, or nuts, making them a favorite among coffee connoisseurs.</p>
+    </div> 
+
+    <div class="robusta">
+      <h2 style="font-size: large;">2. Robusta</h2>
+      <p></p>
+    </div>
+  </section>
 
     <script src="Assets/homepagescript.js"></script>
 </body>
