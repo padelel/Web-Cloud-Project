@@ -5,10 +5,6 @@
 
 body{
     min-height: 100vh;
-    background-image: url(slideshow1.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -26,7 +22,7 @@ nav ul{
 }
 
 nav li{
-    height: 50px;
+    height: 65px;
 }
 
 nav a{
@@ -72,6 +68,32 @@ nav li:first-child{
 
 .menubutton{
     display: none;
+}
+
+.container{
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.slider-wrapper{
+    position: relative;
+    max-width: 48rem;
+    margin:0 auto;
+}
+
+.slider{
+    display: flex;
+    aspect-ratio: 16/9;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    box-shadow: 0 1.5rem 3rem -0.75rem hsla(0, 0%, 0%, 0.25);
+    border-radius: 0.5rem;
+}
+
+.slider img{
+    flex:1 0 100%;
+    scroll-snap-align: start;
 }
 
 @media(max-width: 800px){
