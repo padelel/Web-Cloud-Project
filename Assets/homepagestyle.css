@@ -83,72 +83,27 @@ nav li:first-child{
     margin-right: 15rem;
 }
 
-.arabica{
-    text-align: justify;
-    float: left;
-    margin-right: 30rem;
-    margin-left: 20rem;
-    padding-right: 10rem;
+.beans-info{
+    margin-left: 15rem;
+    margin-right: 15rem;
+}
+
+.beans-text{
+    padding-bottom: 3rem;
+}
+
+.beans-detail{
+    font-size: 20px;
+    padding-bottom: 7%;
     line-height: 1.5;
 }
 
-.arabica-image{
+.beans-image{
     border-radius: 3px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
-    float: right;
-    margin-left: 3rem;
-    margin-bottom: 5rem;
-}
-
-.robusta{
-    text-align: justify;
-    float: left;
-    margin-right: 30rem;
-    margin-left: 20rem;
-    padding-right: 10rem;
-    line-height: 1.5;
-}
-
-.robusta-image{
-    border-radius: 3px;
-    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
-    float: right;
-    margin-left: 3rem;
-    margin-bottom: 5rem;
-}
-
-.liberica{
-    text-align: justify;
-    float: left;
-    margin-right: 30rem;
-    margin-left: 20rem;
-    padding-right: 10rem;
-    line-height: 1.5;
-}
-
-.liberica-image{
-    border-radius: 3px;
-    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
-    float: right;
-    margin-left: 3rem;
-    margin-bottom: 5rem;
-}
-
-.excelsa{
-    text-align: justify;
-    float: left;
-    margin-right: 30rem;
-    margin-left: 20rem;
-    padding-right: 10rem;
-    line-height: 1.5;
-}
-
-.excelsa-image{
-    border-radius: 3px;
-    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
-    float: right;
-    margin-left: 3rem;
-    margin-bottom: 5rem;
+    max-width: 25%;
+    max-height:15%;
+    
 }
 
 hr{
@@ -256,19 +211,30 @@ hr{
   to {opacity: 1}
 }
 
+@media(max-width: 1300px){
+    .welcome-text{
+        margin-left: 8rem;
+        margin-right: 8rem;
+    }
+}
+
+@media(max-width:1024px){
+    .beans-detail{
+    margin-left: 1rem;
+    margin-right: 1rem;
+    }
+
+    .beans-image{
+        float: none;
+    }
+}
+
 @media(max-width: 800px){
     .hideonmobile{
         display: none;
     }
     .menubutton{
         display: block;
-    }
-}
-
-@media(max-width: 1300px){
-    .welcome-text{
-        margin-left: 8rem;
-        margin-right: 8rem;
     }
 }
 
@@ -294,6 +260,11 @@ hr{
 
     .beans-text{
         font-size: 18px;
+    }
+
+    .beans-detail{
+        margin-left: 10rem;
+        margin-right: 10rem;
     }
 }
 
@@ -323,5 +294,10 @@ hr{
 
     .beans-text{
         font-size: 15px;
+    }
+
+    .beans-detail{
+        margin-left: 1%;
+        margin-right: 10rem;
     }
 }
