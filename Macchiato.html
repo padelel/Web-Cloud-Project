@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brew Bounty</title>
+    <link rel="stylesheet" href="Assets/css/homepagestyle.css">
+</head>
+
+<body>
+
+    <nav>
+        <ul class="sidebar">
+            <li onclick=closeSidebar()><a href="HomePage.html"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></a></li>
+            <li class="nav-text"><a href="RecipePage.html">Recipe</a></li>
+            <li class="nav-text"><a href="#">Order</a></li>
+            <li class="nav-text"><a href="#">About Us</a></li>
+        </ul>
+
+        <ul>
+            <li class="nav-brand"><a href="HomePage.html"><img class="logo" height="50" src = "Assets/coffee-beans.png">Brew Bounty</a></li>
+            <li class="hideonmobile"><a href="RecipePage.html">Recipe</a></li>
+            <li class="hideonmobile"><a href="#">Order</a></li>
+            <li class="hideonmobile"><a href="#">About Us</a></li>
+            <li class="menubutton" onclick=showSidebar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a></li>
+        </ul>
+    </nav>
+
+    <div class="detail-container">
+        <div class="detail-image">
+          <img src="Assets/macchiato.jpg">
+        </div>
+      
+        <div class="detail-description">
+          <h3>Macchiato</h3>
+          <p>In Italian, the term ‘macchiato’ translates as ‘marked’ or ‘stained’, meaning a stained or marked coffee. The macchiato is an espresso coffee drink, topped with a small amount of foamed or steamed milk to allow the taste of the espresso to still shine through.</p>
+        </div>
+      
+        <div class="detail-Ingredients">
+          <h3>Ingredients</h3>
+          <ol>
+            <li>Fresh grounded coffee beans</li>
+            <li>Cold milk</li>
+          </ol>
+          <h3>You also need</h3>
+          <ol>
+            <li>small cup, 160-175ml capacity</li>
+          </ol>
+        </div>
+      
+        <div class="detail-step">
+          <h3>Directions</h3>
+          <ol>
+            <li>Brew one shot of fresh espresso with espresso machine.</li>
+            <li>Steam milk to 160°, and hold the steam wand just below the surface to create foam.</li>
+            <li>Pour milk into espresso to taste and spoon foam on top.</li>
+          </ol>
+        </div>
+    </div>
+
+    <script src="Assets/js/homepagescript.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brew Bounty</title>
+    <link rel="stylesheet" href="Assets/css/homepagestyle.css">
+</head>
+
+<body>
+
+    <nav>
+        <ul class="sidebar">
+            <li onclick=closeSidebar()><a href="HomePage.html"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></a></li>
+            <li class="nav-text"><a href="RecipePage.html">Recipe</a></li>
+            <li class="nav-text"><a href="#">Order</a></li>
+            <li class="nav-text"><a href="#">About Us</a></li>
+        </ul>
+
+        <ul>
+            <li class="nav-brand"><a href="HomePage.html"><img class="logo" height="50" src = "Assets/coffee-beans.png">Brew Bounty</a></li>
+            <li class="hideonmobile"><a href="RecipePage.html">Recipe</a></li>
+            <li class="hideonmobile"><a href="#">Order</a></li>
+            <li class="hideonmobile"><a href="#">About Us</a></li>
+            <li class="menubutton" onclick=showSidebar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a></li>
+        </ul>
+    </nav>
+
+    <div class="detail-container">
+        <div class="detail-image">
+          <img src="Assets/latte.jpg">
+        </div>
+      
+        <div class="detail-description">
+          <h3>Latte</h3>
+          <p>A latte or caffè latte is a milk coffee that boasts a silky layer of foam as a real highlight to the drink. A true latte will be made up of one or two shots of espresso, steamed milk and a final, thin layer of frothed milk on top. These elements combined result in a balanced milky coffee that possesses an aesthetically pleasing look and a smooth texture.</p>
+        </div>
+      
+        <div class="detail-Ingredients">
+          <h3>Ingredients</h3>
+          <ol>
+            <li>18g ground espresso, or 1 espresso pod</li>
+            <li>250ml milk</li>
+          </ol>
+          <h3>You also need</h3>
+          <ol>
+            <li>large cup, 300-350ml capacity</li>
+          </ol>
+        </div>
+      
+        <div class="detail-step">
+          <h3>Directions</h3>
+          <ol>
+            <li>Make around 35ml espresso using your coffee machine and pour it into the base of your cup.</li>
+            <li>Steam the milk with the steamer attachment so that it has around 2-3cm of foam on top. Hold the jug so that the spout is about 3-4cm above the cup and pour the milk in steadily. As the volume within the cup increases, bring the jug as close to the surface of the drink as possible whilst aiming to pour into the centre. Once the milk jug is almost touching the surface of the coffee, tilt to speed up the rate of pour. As you accelerate, the milk will hit the back of the cup and start naturally folding in on itself to create a pattern on the top.</li>
+          </ol>
+        </div>
+    </div>
+
+    <script src="Assets/js/homepagescript.js"></script>
+</body>
+</html>
