@@ -186,7 +186,6 @@ nav li:first-child{
     margin-top: 16px;
   }
 
-  /* CSS for detail-container */
 .detail-container {
     max-width: 600px;
     margin: 20px auto;
@@ -196,7 +195,6 @@ nav li:first-child{
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   }
   
-  /* CSS for detail-image */
   .detail-image img {
     max-width: 100%;
     display: block;
@@ -205,7 +203,6 @@ nav li:first-child{
     box-shadow:  0 0 5px rgba(0, 0, 0, 0.5);
   }
   
-  /* CSS for detail-description */
   .detail-description h3 {
     font-size: 24px;
     margin-bottom: 10px;
@@ -217,7 +214,6 @@ nav li:first-child{
     margin-bottom: 20px;
   }
   
-  /* CSS for detail-Ingredients */
   .detail-Ingredients h3 {
     font-size: 20px;
     margin-bottom: 10px;
@@ -230,7 +226,6 @@ nav li:first-child{
     padding-left: 20px;
   }
   
-  /* CSS for detail-step */
   .detail-step h3 {
     font-size: 20px;
     margin-bottom: 10px;
@@ -388,6 +383,10 @@ hr{
     .beans-detail{
         font-size: 17px;
         width: 405px;
+    }
+
+    .recipe-title{
+      font-size: 30px;
     }
 }
 
