@@ -173,9 +173,9 @@ section h1 {
 
 .contact-box input:focus,
 .contact-box textarea:focus {
-  border-color: #007bff;
+  border-color: rgb(135, 104, 79);
   outline: none;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  box-shadow: 0 0 5px rgba(135, 104, 79, 0.75);
 }
 
 .button {
