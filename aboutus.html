@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us</title>
+
+    <!-- Link remixicon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.1.0/remixicon.css"
+    />
+
+    <!-- Link CSS -->
+  <link rel="stylesheet" href="assets/css/contact&aboutus.css" />
+  </head>
+
+  <body>
+    <nav>
+        <ul class="sidebar">
+            <li onclick=closeSidebar() class="cross"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></a></li>
+            <li class="nav-text"><a href="#">Recipe</a></li>
+            <li class="nav-text"><a href="aboutus.html">About Us</a></li>
+            <li class="nav-text"><a href="contactus.html">Contact Us</a></li>
+        </ul>
+
+        <ul>
+            <li class="nav-brand"><a href="#"><img class="logo" height="50" src = "assets/coffee-beans.png">Brew Bounty</a></li>
+            <div class="navbar">
+              <li class="hideonmobile"><a href="#">Recipe</a></li>
+              <li class="hideonmobile"><a href="aboutus.html">About Us</a></li>
+              <li class="hideonmobile"><a href="contactus.html">Contact Us</a></li>
+              <li class="menubutton" onclick=showSidebar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a></li>
+            </div>
+        </ul>
+    </nav>
+
+    <section class="aboutus">
+      <div class="container">
+        <div class="section-description">
+            <h1>About Us</h1>
+            <p>
+              Web ini dibuat untuk menyelesaikan project 2 : Web Responsive
+              Development. Kami mengusulkan web ini dibuat karena menurut kami
+              menarik dan ingin mengembangkan pengetahuan tentang kopi
+            </p>
+          </div>
+          <div class="about-img">
+            <div class="img-profile">
+              <img src="assets/foto-fadhl.jpg" alt="Foto Diri Fadhl" />
+              <div class="img-description">
+                <p>Muhammad Fadhl Ivander Virajati</p>
+                <p>2220010025</p>
+                <div class="img-social_links">
+                  <a href="https://www.instagram.com/eldaffff/" target="_blank" class="instagram"><i class="ri-instagram-line" ></i></a>
+                  <a href="https://www.linkedin.com/in/fadel-ivander-860a5224b/" target="_blank" class="linkedin"><i class="ri-linkedin-box-fill"></i></a>
+                  <a href="https://github.com/padelel" target="_blank" class="github"><i class="ri-github-fill"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="img-profile">
+              <img src="assets/foto-angga(2).jpg" alt="Foto Diri Angga" />
+              <div class="img-description">
+                <p>Teuku Muhammad Erlangga Pratama</p>
+                <p>2220010050</p>
+                <div class="img-social_links">
+                  <a href="https://www.instagram.com/pratamaerlngga/" target="_blank" class="instagram"><i class="ri-instagram-line" ></i></a>
+                  <a href="https://www.linkedin.com/in/teuku-muhammad-erlangga-pratama/" target="_blank" class="linkedin"><i class="ri-linkedin-box-fill"></i></a>
+                  <a href="https://github.com/ErlPrtm" target="_blank" class="github"><i class="ri-github-fill"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </section>
+    
+    <script src="assets/js/homepagescript.js"></script>
+  </body>
+</html>

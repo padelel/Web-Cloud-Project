@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us</title>
+
+    <!-- Link remixicon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.1.0/remixicon.css"
+    />
+
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="assets/css/contact&aboutus.css" />
+  </head>
+  <body>
+    <nav>
+        <ul class="sidebar">
+            <li onclick=closeSidebar() class="cross"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></a></li>
+            <li class="nav-text"><a href="#">Recipe</a></li>
+            <li class="nav-text"><a href="aboutus.html">About Us</a></li>
+            <li class="nav-text"><a href="contactus.html">Contact Us</a></li>
+        </ul>
+
+        <ul>
+            <li class="nav-brand"><a href="#"><img class="logo" height="50" src = "assets/coffee-beans.png">Brew Bounty</a></li>
+            <div class="navbar">
+              <li class="hideonmobile"><a href="#">Recipe</a></li>
+              <li class="hideonmobile"><a href="aboutus.html">About Us</a></li>
+              <li class="hideonmobile"><a href="contactus.html">Contact Us</a></li>
+              <li class="menubutton" onclick=showSidebar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a></li>
+            </div>
+        </ul>
+    </nav>
+
+    <section class="contact container">
+        <div class="section-description">
+          <h1>Contact Us</h1>
+          <p>
+            We're here to help and answer any question you might have. We look
+            forward to hearing from you
+          </p>
+        </div>
+        <div class="contact-content">
+          <div class="contact-information">
+            <div class="contact-info">
+              <span class="ion--location-sharp"></span>
+              <h2>Location</h2>
+              <p>Di sebelah gang kamu</p>
+            </div>
+
+            <div class="contact-info">
+              <span class="ic--round-phone"></span>
+              <h2>Phone</h2>
+              <p>0812381247123</p>
+            </div>
+
+            <div class="contact-info">
+              <span class="ic--baseline-email"></span>
+              <h2>E-Mail</h2>
+              <p>brewbounty@gmail.com</p>
+            </div>
+          </div>
+          <!-- Line -->
+          <span class="vaadin--line-v"></span>
+
+          <form action="" class="contact-form">
+            <div class="contact-group">
+              <div class="contact-box">
+                <label for="firstName">First Name</label>
+                <input
+                  type="text"
+                  name="firstName"
+                  class="contact-input"
+                  id="firstName"
+                  placeholder="First Name"
+                />
+              </div>
+
+              <div class="contact-box">
+                <label for="lastName">Last Name</label>
+                <input
+                  type="text"
+                  name="lastName"
+                  class="contact-input"
+                  id="lastName"
+                  placeholder="Last Name"
+                />
+              </div>
+            </div>
+
+            <div class="contact-box">
+              <label for="email">E-Mail</label>
+              <input
+                type="email"
+                name="email"
+                class="contact-input"
+                id="email"
+                placeholder="E-Mail"
+              />
+            </div>
+
+            <div class="contact-box">
+              <textarea
+                name="user-message"
+                class="contact-input"
+                placeholder="Your Question / Message"
+              ></textarea>
+            </div>
+
+            <button type="submit" class="contact-button button">
+              <i class="ri-mail-send-line"></i>Send Message/Question
+            </button>
+          </form>
+        </div>
+    </section>
+
+    <script src="assets/js/homepagescript.js"></script>
+  </body>
+</html>

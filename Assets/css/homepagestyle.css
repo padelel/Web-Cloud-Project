@@ -13,57 +13,99 @@ body{
     background-color:#f0f0f0;
 }
 
-nav{
-    background-color: whitesmoke;
-    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+nav {
+  background-color: whitesmoke;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
 }
 
-nav ul{
-    width: 100%;
-    list-style: none;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+nav ul {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  list-style: none;
 }
 
-nav li{
-    height: 65px;
+nav li {
+  height: 65px;
 }
 
-nav a{
-    height: 100%;
-    padding: 0 30px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    color: black;
+nav a {
+  height: 100%;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  color: black;
+  transition: all .3s ease;
 }
 
-nav a:hover{
-    background-color: #f0f0f0;
+nav a:hover {
+  color: #969696; 
 }
 
-nav li:first-child{
-    margin-right: auto;
+nav a::after {
+  content: "";
+  width: 0;
+  height: 2px;
+  background-color: #969696;
+  position: absolute;
+  left: 0;
+  bottom: -0.5rem;
+  transition: width .3s;
 }
 
-.hideonmobile{
-    font-size: large;
-    font-weight: 600;
+.nav a:hover::after {
+  width: 75%;
 }
 
-.nav-text{
-    font-size: large;
-    font-weight: 600;
+nav li:first-child {
+  margin-right: auto;
 }
 
-.nav-brand{
-    font-weight: 600;
-    font-size: 20px;
+.hideonmobile {
+  font-size: large;
+  font-weight: 600;
 }
 
-.logo{
-    padding-right: 0.7rem;
+.nav-text {
+  font-size: large;
+  font-weight: 600;
+}
+
+.nav-brand {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.logo {
+  padding-right: 0.7rem;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 150vh;
+  width: 250px;
+  z-index: 999;
+  background-color: rgba(245, 245, 245, 0.692);
+  backdrop-filter: blur(10px);
+  box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
+  display: none;
+  flex-direction: column;
+  text-align: center;
+  justify-content: flex-start;
+}
+
+.sidebar li {
+  width: 100%;
+}
+
+.sidebar a {
+  width: 100%;
+}
+
+.menubutton {
+  display: none;
 }
 
 .welcome{
@@ -249,34 +291,6 @@ hr{
     width: 80%;
 }
 
-.sidebar{
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100vh;
-    width: 250px;
-    z-index: 999;
-    background-color: rgba(245, 245, 245, 0.692);
-    backdrop-filter: blur(10px);
-    box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
-    display: none;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-}
-
-.sidebar li{
-    width: 100%;
-}
-
-.sidebar a{
-    width: 100%;
-}
-
-.menubutton{
-    display: none;
-}
-
 .slideshow-container {
   max-width: 1000px;
   position: relative;
@@ -354,7 +368,7 @@ hr{
     }
 }
 
-@media(max-width: 768px){
+@media screen and (min-width: 768px){
     .hideonmobile{
         display: none;
     }
@@ -460,5 +474,100 @@ hr{
     .beans-welcome{
         font-size: 20px;
     }
+}
 
+@media screen and (min-width: 320px) {
+  nav {
+    padding: 0 2rem;
+  }
+
+  .menubutton {
+    display: flex;
+  }
+
+  .hideonmobile {
+    display: none;
+  }
+
+  .sidebar {
+    gap: 2rem;
+    width: 75%;
+  }
+
+  .sidebar .cross a {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 1rem;
+  }
+
+  .sidebar .nav-text a {
+    font-size: 0.75rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .welcome-text {
+    font-size: small;
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+
+  .logo {
+    width: 40px;
+    height: 30px;
+  }
+
+  .nav-brand {
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  .logo {
+    width: 50px;
+    height: 40px;
+  }
+
+  .nav-brand {
+    font-size: 17px;
+  }
+
+  .big-welcome {
+    font-size: 18px;
+  }
+
+  .beans-text {
+    font-size: 18px;
+  }
+
+  .sidebar {
+    width: 50%;
+  }
+
+  .sidebar .nav-text a {
+    font-size: 1.25rem;
+  }
+
+  .section-description h1 {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .menubutton {
+    display: none;
+  }
+
+  .navbar {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .hideonmobile {
+    display: flex;
+  }
+
+  .section-description h1 {
+    font-size: 2.75rem;
+  }
 }
