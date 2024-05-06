@@ -368,7 +368,7 @@ hr{
     }
 }
 
-@media screen and (min-width: 768px){
+@media screen and (max-width: 768px){
     .hideonmobile{
         display: none;
     }
@@ -388,6 +388,7 @@ hr{
     .welcome-text{
         margin-left: 7rem;
         margin-right: 7rem;
+        justify-content: center;
     }
 
     .beans-info {
