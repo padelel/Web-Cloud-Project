@@ -13,6 +13,63 @@
 
     <!-- Link CSS -->
     <link rel="stylesheet" href="assets/css/contact&aboutus.css" />
+
+    <!-- SweetAlert CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+  function validateForm(event) {
+    // Prevent the default form submission behavior
+    event.preventDefault();
+
+    // Get references to the input fields
+    const firstNameInput = document.getElementById("firstName");
+    const lastNameInput = document.getElementById("lastName");
+    const emailInput = document.getElementById("email");
+
+    // Clear any previous error messages
+    document.querySelectorAll(".nameValidation, .emailValidation").forEach((elem) => {
+      elem.textContent = "";
+    });
+
+    // Validation for first name
+    const firstName = firstNameInput.value.trim();
+    if (!/^[A-Za-z]+$/.test(firstName)) {
+      document.querySelector("#firstName + .nameValidation").textContent = "Input nama harus berupa huruf";
+      return false;
+    }
+
+    // Validation for last name
+    const lastName = lastNameInput.value.trim();
+    if (!/^[A-Za-z]+$/.test(lastName)) {
+      document.querySelector("#lastName + .nameValidation").textContent = "Input nama harus berupa huruf";
+      return false;
+    }
+
+    // Validation for email
+    const email = emailInput.value.trim();
+    if (!email.includes("@") || !email.endsWith(".com")) {
+      document.querySelector("#email + .emailValidation").textContent = "Input email harus valid (harus ada @ dan diakhiri dengan .com)";
+      return false;
+    }
+
+    // Show SweetAlert message
+    Swal.fire({
+      title: "Submit Successful",
+      text: "Terima kasih " + lastName + ", atas feedback yang sudah Anda berikan.",
+      icon: "success",
+      confirmButtonText: "Ok",
+      timer: null // Ensuring the notification waits for user interaction
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Refresh the page or any other action after confirmation
+        location.reload();
+      }
+    });
+
+    return true; // Keep this if other operations depend on the form submission
+  }
+</script>
   </head>
   <body>
     <nav>
@@ -65,7 +122,7 @@
           <!-- Line -->
           <span class="vaadin--line-v"></span>
 
-          <form action="" class="contact-form">
+          <form action="" id="contact-form" class="contact-form" onsubmit="return validateForm(event)">
             <div class="contact-group">
               <div class="contact-box">
                 <label for="firstName">First Name</label>
@@ -76,30 +133,36 @@
                   id="firstName"
                   placeholder="First Name"
                   autofocus
-                />
-              </div>
-
-              <div class="contact-box">
-                <label for="lastName">Last Name</label>
-                <input
+                  required
+                  />
+                  <p class="nameValidation">* Input nama harus huruf</p>
+                </div>
+                
+                <div class="contact-box">
+                  <label for="lastName">Last Name</label>
+                  <input
                   type="text"
                   name="lastName"
                   class="contact-input"
                   id="lastName"
                   placeholder="Last Name"
-                />
+                  required
+                  />
+                  <p class="nameValidation">* Input nama harus huruf</p>
+                </div>
               </div>
-            </div>
-
-            <div class="contact-box">
-              <label for="email">E-Mail</label>
+              
+              <div class="contact-box">
+                <label for="email">E-Mail</label>
               <input
-                type="email"
-                name="email"
-                class="contact-input"
-                id="email"
-                placeholder="E-Mail"
+              type="text"
+              name="email"
+              class="contact-input"
+              id="email"
+              placeholder="E-Mail"
+              required
               />
+              <p class="emailValidation">* Input email harus ada @ dan .com/kurang perantara web browsernya</p>
             </div>
 
             <div class="contact-box">
@@ -107,6 +170,7 @@
                 name="user-message"
                 class="contact-input"
                 placeholder="Your Question / Message"
+                required
               ></textarea>
             </div>
 
@@ -116,7 +180,5 @@
           </form>
         </div>
     </section>
-
-    <script src="assets/js/homepagescript.js"></script>
   </body>
 </html>
