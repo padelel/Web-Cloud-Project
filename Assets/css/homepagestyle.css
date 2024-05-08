@@ -226,6 +226,11 @@ nav li:first-child {
     border-radius: 5px;
     color: #ffffff;
     margin-top: 16px;
+    transition: all .3s ease;
+  }
+
+  .recipe-content .btn:hover {
+    background-color: #3c3c3c;
   }
 
 .detail-container {
