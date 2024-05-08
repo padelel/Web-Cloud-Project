@@ -18,42 +18,46 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script>
-  function validateForm(event) {
-    // Prevent the default form submission behavior
-    event.preventDefault();
+  // ========================== FORM VALIDATION ========================== \\
+function validateForm(event) {
+  event.preventDefault();
 
-    // Get references to the input fields
-    const firstNameInput = document.getElementById("firstName");
-    const lastNameInput = document.getElementById("lastName");
-    const emailInput = document.getElementById("email");
+  const firstNameInput = document.getElementById("firstName");
+  const lastNameInput = document.getElementById("lastName");
+  const emailInput = document.getElementById("email");
 
-    // Clear any previous error messages
-    document.querySelectorAll(".nameValidation, .emailValidation").forEach((elem) => {
-      elem.textContent = "";
-    });
+  const nameValidation = document.querySelectorAll(".nameValidation");
+  const emailValidation = document.querySelector(".emailValidation");
 
-    // Validation for first name
-    const firstName = firstNameInput.value.trim();
-    if (!/^[A-Za-z]+$/.test(firstName)) {
-      document.querySelector("#firstName + .nameValidation").textContent = "Input nama harus berupa huruf";
-      return false;
-    }
+  let isValid = true;
 
-    // Validation for last name
-    const lastName = lastNameInput.value.trim();
-    if (!/^[A-Za-z]+$/.test(lastName)) {
-      document.querySelector("#lastName + .nameValidation").textContent = "Input nama harus berupa huruf";
-      return false;
-    }
+  // Validation for first name
+  if (!/^[A-Za-z]+$/.test(firstNameInput.value)) {
+    nameValidation[0].style.display = "block";
+    isValid = false;
+  } else {
+    nameValidation[0].style.display = "none";
+  }
 
-    // Validation for email
-    const email = emailInput.value.trim();
-    if (!email.includes("@") || !email.endsWith(".com")) {
-      document.querySelector("#email + .emailValidation").textContent = "Input email harus valid (harus ada @ dan diakhiri dengan .com)";
-      return false;
-    }
+  // Validation for last name
+  if (!/^[A-Za-z]+$/.test(lastNameInput.value)) {
+    nameValidation[1].style.display = "block";
+    isValid = false;
+  } else {
+    nameValidation[1].style.display = "none";
+  }
 
-    // Show SweetAlert message
+  // Validation for email
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+    emailValidation.style.display = "block";
+    isValid = false;
+  } else {
+    emailValidation.style.display = "none";
+  }
+
+  if (isValid) {
+    const lastName = lastNameInput.value;
+
     Swal.fire({
       title: "Submit Successful",
       text: "Terima kasih " + lastName + ", atas feedback yang sudah Anda berikan.",
@@ -66,9 +70,11 @@
         location.reload();
       }
     });
-
-    return true; // Keep this if other operations depend on the form submission
   }
+
+
+  return isValid; // Keep this if other operations depend on the form submission
+}
 </script>
   </head>
   <body>

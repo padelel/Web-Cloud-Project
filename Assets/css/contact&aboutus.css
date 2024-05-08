@@ -176,6 +176,10 @@ section h1 {
 .emailValidation {
   display: none;
   color: red;
+  margin-top: 1rem;
+  padding: .25rem;
+  background-color: rgba(200, 50, 50, .25);
+  border-radius: 8px;
   font-size: 1rem;
 }
 
