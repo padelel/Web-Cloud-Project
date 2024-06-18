@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Table</title>
+
+    <!--================= Remix Icon =================-->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.1.0/remixicon.css"/>
+
+    <link rel="stylesheet" href="../Assets/css/styles.css">
+</head>
+<body>
+    <section class="sidebar">
+        <div class="sidebar-top">
+            <a href="" class="sidebar-title">Brew & Bounty</a>
+            <img src="../Assets/coffee-beans.png" alt="Logo Icon">
+        </div>
+        
+        <hr class="line">
+
+        <ul class="sidebar-content">
+            <a href=""><li><i class="ri-home-2-line"></i>Home</li></a>
+            <a href="menu.html"><li><i class="ri-restaurant-2-line"></i>Menu</li></a>
+            <a href="cashiers.html"><li><i class="ri-admin-line"></i>Cashiers</li></a>
+        </ul>
+    </section>
+
+    <section class="main-content">
+        <div class="top">
+            <a href="" class="top-title">Brew & Bounty > <b>Cashiers</b></a>
+            <a href="" class="add-button">+ Items</a>
+        </div>
+
+        <h1 class="main-title">Items</h1>
+
+        <div class="table">
+            <div class="table-option">
+                <label for="filter" id="filter-label"><i class="ri-filter-3-line"></i>Filter</label>
+                <select name="filter" id="filter" hidden>
+                    <option value="ascending">Ascending</option>
+                    <option value="descending">Descending</option>
+                    <option value="orderDate">Order Date</option>
+                </select>
+                <div id="custom-dropdown" class="custom-dropdown">
+                    <div class="option" data-value="ascending">Ascending</div>
+                    <div class="option" data-value="descending">Descending</div>
+                    <div class="option" data-value="orderDate">Order Date</div>
+                </div>    
+            </div>
+
+            <div class="table-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Admin ID</th>
+                            <th>Admin Image</th>
+                            <th>Username</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><img src="" alt="Profile Picture"></td>
+                            <td>Admin1</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <form class="pagination">
+                    <label for="dataperpage">Lines per Page</label>
+                    <select name="dataperpage" id="dataperpage">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
+                    <p>1 - 5 out of ??</p>
+                    <div class="pagination-button">
+                        <a href=""><i class="ri-arrow-left-s-line"></i></a>
+                        <a href=""><i class="ri-arrow-right-s-line"></i></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <script src="../Assets/js/script.js"></script>
+</body>
+</html>

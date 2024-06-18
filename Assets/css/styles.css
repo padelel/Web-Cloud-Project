@@ -1,0 +1,269 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #f0f0f0;
+}
+
+label {
+    color: #333;
+    cursor: pointer;
+}
+
+select {
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    /* font-size: 16px; */
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+select:hover {
+    border-color: #6d4c41;
+}
+
+select:focus {
+    border-color: #6d4c41;
+    box-shadow: 0 0 8px rgba(131, 77, 41, 0.5);
+}
+
+.sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 15rem;
+    background-color: #b08968;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.sidebar-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar-title {
+    font-size: 1.35rem;
+    color: #fff;
+    margin-bottom: .5rem;
+    text-decoration: none;
+}
+
+.sidebar-top img {
+    width: 40px;
+    height: 40px;
+}
+
+.line {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 1.0rem;
+    border: none;
+    border-top: 1px solid rgba(235, 235, 235, .5);
+}
+
+.sidebar-content {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.sidebar-content i {
+    margin-right: .5rem;
+}
+    
+.sidebar-content a{
+    text-decoration: none;
+}
+
+.sidebar-content li {
+    color: #fff;
+    cursor: pointer;
+    padding: 1rem;
+    border-radius: 8px;
+    transition: all .3s ease;
+}
+
+.sidebar-content .menu-dropdown {
+    display: none;
+    border-radius: 8px;
+    padding-left: 1rem;
+}
+
+.sidebar-content .menu-dropdown.active {
+    display: flex;
+}
+
+.sidebar-content li:hover,
+.sidebar-content .menu-dropdown:hover {
+    background-color: #7a5e46;
+}
+
+
+.main-content {
+    margin-left: 15rem;
+    padding-left: 2rem;
+}
+
+.top {
+    padding: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.top-title {
+    text-decoration: none;
+    color: #333;
+}
+
+.top a {
+    text-decoration: none;
+}
+
+.add-button {
+    background-color: #b08968;
+    color: #f0f0f0;
+    padding: .5rem;
+    border-radius: 4px;
+    margin-right: 1rem;
+    transition: all .3s ease;
+}
+
+.add-button:hover {
+    background-color: #7a5e46;
+}
+
+.main-title {
+    margin-bottom: 1rem;
+}
+
+.nav-list {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.nav-list a {
+    text-decoration: none;
+    color: #0f0f0f77;
+}
+
+.table-content {
+    margin: 16px 16px 8px 0;
+}
+
+.table-option {
+    position: relative;
+    display: inline-block;
+}
+
+#filter-label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.custom-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(83, 54, 20, 0.5);
+    z-index: 1000;
+    width: 150px;
+}
+
+.active {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.custom-dropdown .option {
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.custom-dropdown .option:hover {
+    background-color: #7a5e46;
+    color: #f0f0f0;
+}
+
+.table-content table {
+    width: 100%;
+    border: 1px solid #907156;
+    border-radius: 4px;
+    border-spacing: 0;
+    overflow: hidden;
+    /* border-collapse: collapse; */
+    margin-bottom: 1rem;
+}
+
+.table-content table thead th {
+    position: relative;
+}
+
+.table-content table thead th::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    border-bottom: .5px solid #90715688;
+}
+
+.table-content table td,
+.table-content table th {
+    text-align: center;
+    padding: 8px;
+}
+
+.table-content table tbody td,
+.table-content table tbody th {
+    position: relative;
+}
+
+.table-content table tbody td::after,
+.table-content table tbody th::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    border-bottom: .5px solid #90715688;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 8px;
+}
+
+.pagination-button {
+    cursor: pointer;
+}
+
+.pagination-button a {
+    text-decoration: none;
+}
+
+.pagination-button a:hover {
+    color: #7a5e46;
+}
