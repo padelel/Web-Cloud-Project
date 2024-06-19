@@ -53,7 +53,7 @@
                 </div>    
             </div>
 
-            <div class="table-content">
+            <div class="table-content" id="table-content">
                 <table>
                     <thead>
                         <tr>
@@ -62,31 +62,18 @@
                             <th>Menu ID</th>
                             <th>Price</th>
                             <th>Description</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
-                    <tbody>
-                        <tr>
+                    <tbody id="table-body">
+                        <!-- <tr>
                             <td><img src="" alt="Pizza Photo"></td>
                             <td>Pizza</td>
                             <td>1</td>
                             <td>$1.50</td>
                             <td>Italian food that served with topping like pepperoni, parsley and cheese with sauce</td>
-                        </tr>
-                        <tr>
-                            <td><img src="" alt="Burger Photo"></td>
-                            <td>Burger</td>
-                            <td>2</td>
-                            <td>$1.00</td>
-                            <td>American food, combined bun with patty and topping like pickle, lettuce and with sauce and cheese</td>
-                        </tr>
-                        <tr>
-                            <td><img src="" alt="Hotdog Image"></td>
-                            <td>Hotdog</td>
-                            <td>3</td>
-                            <td>1.00</td>
-                            <td>American food</td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
 
@@ -109,5 +96,82 @@
     </section>
 
     <script src="../Assets/js/script.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+    <script type="module">
+    // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        
+    // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyDzURQckDxjVYzWHcRSfq0VTBjqwQYhUg0",
+          authDomain: "brew-bounty-admin.firebaseapp.com",
+          databaseURL: "https://brew-bounty-admin-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "brew-bounty-admin",
+          storageBucket: "brew-bounty-admin.appspot.com",
+          messagingSenderId: "108525876940",
+          appId: "1:108525876940:web:e8eff02f81f9425d65f469",
+          measurementId: "G-124F208GM2"
+        };
+  
+    // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const menuRef = ref(database, 'menu');
+
+        function fetchandDisplayMenu () {
+            onValue (menuRef, (snapshot) => {
+                const data = snapshot.val();
+                const tableBody = document.getElementById('table-body');
+
+                // Pembersihan tabel sebelum data baru 
+                tableBody.innerHTML = '';
+
+                // Iterasi melalui data dan ditambahkan ke tabel
+                for (const key in data) {
+                    if (data.hasOwnProperty(key)) {
+
+                        const menuItem = data[key];
+                        const row = document.createElement('tr');
+
+                        const menuImage = document.createElement('td');
+                        const img = document.createElement('img');
+                        img.src = menuItem.imageURL;
+                        img.alt = `${menuItem.name} Photo`;
+                        img.oneerror = () => {
+                            console.error(`Gagal memuat gambar dari URL: ${menuItem.imageURL}`);
+                        };
+                        menuImage.appendChild(img);
+
+                        const menuName = document.createElement('td');
+                        menuName.textContent = menuItem.name;
+
+                        const menuId = document.createElement('td');
+                        menuId.textContent = menuItem.id;
+
+                        const menuPrice = document.createElement('td');
+                        const price = parseInt(menuItem.price);
+                        menuPrice.textContent = `$${price.toFixed(2)}`;
+
+                        const menuDescription = document.createElement('td');
+                        menuDescription.textContent = menuItem.description;
+
+                        row.appendChild(menuImage);
+                        row.appendChild(menuName);
+                        row.appendChild(menuId);
+                        row.appendChild(menuPrice);
+                        row.appendChild(menuDescription);
+
+                        tableBody.appendChild(row);
+                        console.log(menuItem.imageURL);
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchandDisplayMenu);
+        console.log
+    </script>
 </body>
 </html>
