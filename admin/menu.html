@@ -150,7 +150,7 @@
     
                             const menuPrice = document.createElement('td');
                             const price = parseInt(menuItem.price);
-                            menuPrice.textContent = `Rp${price.toFixed(2)}`;
+                            menuPrice.textContent = `Rp${price.toLocaleString('id-ID')}`;
     
                             const menuDescription = document.createElement('td');
                             menuDescription.textContent = menuItem.description;
