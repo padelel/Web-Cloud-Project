@@ -277,3 +277,34 @@ select:focus {
     width: auto;  
     height: auto;
 }
+
+/* Style untuk notifikasi */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    z-index: 1000;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.notification.success {
+    background-color: #4CAF50; /* Hijau untuk sukses */
+}
+
+.notification.error {
+    background-color: #f44336; /* Merah untuk error */
+}
+
+.notification.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.notification.visible {
+    opacity: 1;
+    visibility: visible;
+}

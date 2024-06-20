@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brew Bounty Admin</title>
+    <link rel="stylesheet" href="../Assets/css/homepagestyle.css">
+</head>
+<body>
+    <nav>
+        <ul class="sidebar">
+            <li onclick="closeSidebar()" class="cross"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></a></li>
+            <li class="nav-text"><a href="menu.html">Exit</a></li>
+        </ul>
+
+        <ul>
+            <li class="nav-brand"><a href="HomePage.html"><img class="logo" height="50" src="../Assets/coffee-beans.png">Brew Bounty</a></li>
+            <div class="navbar">
+                <li class="hideonmobile"><a href="menu.html">Exit</a></li>
+                <li class="menubutton" onclick="showSidebar()"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a></li>
+            </div>
+        </ul>
+    </nav>
+
+    <h2 class="recipe-title">Edit Item</h2>
+
+    <form id="editForm">
+        <label for="itemName">Name:</label>
+        <input type="text" id="itemName" name="itemName" required><br><br>
+
+        <label for="itemPrice">Price:</label>
+        <input type="text" id="itemPrice" name="itemPrice" required><br><br>
+
+        <label for="itemDescription">Description:</label><br>
+        <textarea id="itemDescription" name="itemDescription" required></textarea><br><br>
+
+        <label for="itemImage">Choose Image:</label>
+        <input type="file" id="itemImage" name="itemImage" accept="image/*"><br><br>
+
+        <input type="submit" value="Update Item">
+    </form>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
+    <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+            import { getDatabase, ref, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+            import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDzURQckDxjVYzWHcRSfq0VTBjqwQYhUg0",
+        authDomain: "brew-bounty-admin.firebaseapp.com",
+        projectId: "brew-bounty-admin",
+        storageBucket: "brew-bounty-admin.appspot.com",
+        messagingSenderId: "108525876940",
+        appId: "1:108525876940:web:e8eff02f81f9425d65f469",
+        measurementId: "G-124F208GM2",
+        databaseURL: "https://brew-bounty-admin-default-rtdb.asia-southeast1.firebasedatabase.app",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const storage = getStorage(app);
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const key = urlParams.get('key');
+        const name = urlParams.get('name');
+        const price = urlParams.get('price');
+        const description = urlParams.get('description');
+        const imageURL = urlParams.get('imageURL');
+
+        // Mengisi nilai form dengan data yang diterima dari URL
+        document.getElementById('itemName').value = name;
+        document.getElementById('itemPrice').value = price;
+        document.getElementById('itemDescription').value = description;
+
+        // Handler untuk form edit
+        document.getElementById('editForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const newName = document.getElementById('itemName').value;
+        const newPrice = document.getElementById('itemPrice').value;
+        const newDescription = document.getElementById('itemDescription').value;
+        const newImageFile = document.getElementById('itemImage').files[0]; // Ambil file gambar yang dipilih
+
+        // Jika ada file gambar baru yang dipilih
+        if (newImageFile) {
+            const storageReference = storageRef(storage, `images/${newImageFile.name}`);
+            
+            try {
+                // Unggah file gambar baru ke Firebase Storage
+                const snapshot = await uploadBytes(storageReference, newImageFile);
+                const newImageURL = await getDownloadURL(snapshot.ref);
+
+                // Data yang akan diperbarui
+                const updatedItem = {
+                    name: newName,
+                    price: newPrice,
+                    description: newDescription,
+                    imageURL: newImageURL // URL gambar yang baru diunggah
+                };
+
+                const itemRef = ref(database, `menu/${key}`);
+                // Update data di Firebase Realtime Database
+                await update(itemRef, updatedItem);
+
+                console.log('Item updated successfully');
+                // Redirect kembali ke halaman menu.html setelah update
+                window.location.href = 'menu.html';
+            } catch (error) {
+                console.error('Error updating item with new image:', error);
+                // Menampilkan pesan error jika perlu
+            }
+        } else {
+            // Jika tidak ada file gambar baru dipilih, hanya update data tanpa gambar
+            const updatedItem = {
+                name: newName,
+                price: newPrice,
+                description: newDescription
+            };
+
+            const itemRef = ref(database, `menu/${key}`);
+            // Update data di Firebase Realtime Database
+            await update(itemRef, updatedItem);
+
+            console.log('Item updated successfully');
+            // Redirect kembali ke halaman menu.html setelah update
+            window.location.href = 'menu.html';
+        }
+    });
+
+    });
+
+    </script>
+</body>
+</html>
