@@ -26,6 +26,13 @@
 
     <form id="menuForm">
         <div>
+            <label for="category">Category:</label>
+            <select id="category" name="category" required>
+                <option value="Food">Food</option>
+                <option value="Drink">Drink</option>
+            </select>
+        </div>
+        <div>
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
         </div>
@@ -38,22 +45,22 @@
             <input type="number" id="price" name="price" required>
         </div>
         <div>
-            <label for="image">Image URL:</label>
-            <input type="file" id="image" name="image" required>
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
         </div>
         <div class="buttons">
             <button type="submit">Add Menu Item</button>
         </div>
     </form>
-    
 
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
-    <script type="module">      
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
+    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
         import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-        // Your web app's Firebase configuration
+        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
         const firebaseConfig = {
             apiKey: "AIzaSyDzURQckDxjVYzWHcRSfq0VTBjqwQYhUg0",
             authDomain: "brew-bounty-admin.firebaseapp.com",
@@ -61,31 +68,47 @@
             storageBucket: "brew-bounty-admin.appspot.com",
             messagingSenderId: "108525876940",
             appId: "1:108525876940:web:e8eff02f81f9425d65f469",
-            measurementId: "G-124F208GM2",
+            measurementId: "G-124F208GM2",
             databaseURL: "https://brew-bounty-admin-default-rtdb.asia-southeast1.firebasedatabase.app",
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
         const database = getDatabase(app);
+        const storage = getStorage(app);
+
+        function generateRandomID(prefix) {
+            return prefix + '-' + Math.floor(1000 + Math.random() * 9000).toString();
+        }
 
         document.getElementById('menuForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
+            const category = document.getElementById('category').value;
             const name = document.getElementById('name').value;
             const description = document.getElementById('description').value;
             const price = document.getElementById('price').value;
-            const image = document.getElementById('image').value;
+            const imageFile = document.getElementById('image').files[0];
+
+            const menuIDPrefix = category === "Food" ? "FD" : "DR";
+            const menuID = generateRandomID(menuIDPrefix);
 
             try {
+                // Upload the image to Firebase Storage
+                const storageReference = storageRef(storage, `images/${imageFile.name}`);
+                await uploadBytes(storageReference, imageFile);
+                const imageUrl = await getDownloadURL(storageReference);
+
+                // Save the menu item data to Realtime Database
                 const newMenuItemRef = push(ref(database, 'menu'));
                 await set(newMenuItemRef, {
+                    id: menuID,
+                    category,
                     name,
                     description,
                     price,
-                    image
+                    imageURL: imageUrl // Save the image URL
                 });
+
                 alert('Menu item added successfully');
                 document.getElementById('menuForm').reset();
             } catch (e) {

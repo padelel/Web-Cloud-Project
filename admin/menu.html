@@ -33,7 +33,7 @@
     <section class="main-content">
         <div class="top">
             <a href="" class="top-title">Brew & Bounty > <b>Menu</b></a>
-            <a href="../addMenu.html" class="add-button">+ Items</a>
+            <a href="../addMenu.html" class="add-button">Add Items</a>
         </div>
 
         <h1 class="main-title">Items</h1>
@@ -139,6 +139,7 @@
                         const img = document.createElement('img');
                         img.src = menuItem.imageURL;
                         img.alt = `${menuItem.name} Photo`;
+                        img.className = 'table-img';
                         img.oneerror = () => {
                             console.error(`Gagal memuat gambar dari URL: ${menuItem.imageURL}`);
                         };
@@ -152,7 +153,7 @@
 
                         const menuPrice = document.createElement('td');
                         const price = parseInt(menuItem.price);
-                        menuPrice.textContent = `$${price.toFixed(2)}`;
+                        menuPrice.textContent = `Rp${price.toFixed(2)}`;
 
                         const menuDescription = document.createElement('td');
                         menuDescription.textContent = menuItem.description;
