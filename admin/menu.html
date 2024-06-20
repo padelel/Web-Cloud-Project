@@ -24,8 +24,8 @@
         <ul class="sidebar-content">
             <a href=""><li><i class="ri-home-2-line"></i>Home</li></a>
             <li id="menu"><i class="ri-restaurant-2-line"></i>Menu</li>
-                <a href="food.html" class="menu-dropdown"><li><i class="ri-bowl-fill"></i>Foods</li></a>
-                <a href="" class="menu-dropdown"><li><i class="ri-cup-line"></i>Drinks</li></a>
+                <a href="" class="menu-dropdown food-menu"><li><i class="ri-bowl-fill"></i>Foods</li></a>
+                <a href="" class="menu-dropdown drinks-menu"><li><i class="ri-cup-line"></i>Drinks</li></a>
             <a href="cashiers.html"><li><i class="ri-admin-line"></i>Cashiers</li></a>
         </ul>
     </section>
@@ -66,15 +66,7 @@
                         </tr>
                     </thead>
 
-                    <tbody id="table-body">
-                        <!-- <tr>
-                            <td><img src="" alt="Pizza Photo"></td>
-                            <td>Pizza</td>
-                            <td>1</td>
-                            <td>$1.50</td>
-                            <td>Italian food that served with topping like pepperoni, parsley and cheese with sauce</td>
-                        </tr> -->
-                    </tbody>
+                    <tbody id="table-body"></tbody>
                 </table>
 
                 <form class="pagination">
@@ -120,7 +112,7 @@
         const database = getDatabase(app);
         const menuRef = ref(database, 'menu');
 
-        function fetchandDisplayMenu () {
+        function fetchandDisplayMenu (filterType) {
             onValue (menuRef, (snapshot) => {
                 const data = snapshot.val();
                 const tableBody = document.getElementById('table-body');
@@ -133,46 +125,65 @@
                     if (data.hasOwnProperty(key)) {
 
                         const menuItem = data[key];
-                        const row = document.createElement('tr');
 
-                        const menuImage = document.createElement('td');
-                        const img = document.createElement('img');
-                        img.src = menuItem.imageURL;
-                        img.alt = `${menuItem.name} Photo`;
-                        img.className = 'table-img';
-                        img.oneerror = () => {
-                            console.error(`Gagal memuat gambar dari URL: ${menuItem.imageURL}`);
-                        };
-                        menuImage.appendChild(img);
+                        // Filter berdasarkan type menu
+                        if (!filterType || (filterType === 'food' && menuItem.id.startsWith('FD')) ||
+                            (filterType === 'drinks' && menuItem.id.startsWith('DR'))) {
+                            
+                            const row = document.createElement('tr');
+    
+                            const menuImage = document.createElement('td');
+                            const img = document.createElement('img');
+                            img.src = menuItem.imageURL;
+                            img.alt = `${menuItem.name} Photo`;
+                            img.className = 'table-img';
+                            img.oneerror = () => {
+                                console.error(`Gagal memuat gambar dari URL: ${menuItem.imageURL}`);
+                            };
+                            menuImage.appendChild(img);
+    
+                            const menuName = document.createElement('td');
+                            menuName.textContent = menuItem.name;
+    
+                            const menuId = document.createElement('td');
+                            menuId.textContent = menuItem.id;
+    
+                            const menuPrice = document.createElement('td');
+                            const price = parseInt(menuItem.price);
+                            menuPrice.textContent = `Rp${price.toFixed(2)}`;
+    
+                            const menuDescription = document.createElement('td');
+                            menuDescription.textContent = menuItem.description;
+    
+                            row.appendChild(menuImage);
+                            row.appendChild(menuName);
+                            row.appendChild(menuId);
+                            row.appendChild(menuPrice);
+                            row.appendChild(menuDescription);
+    
+                            tableBody.appendChild(row);
+                            console.log(menuItem.imageURL);
+                        }
 
-                        const menuName = document.createElement('td');
-                        menuName.textContent = menuItem.name;
-
-                        const menuId = document.createElement('td');
-                        menuId.textContent = menuItem.id;
-
-                        const menuPrice = document.createElement('td');
-                        const price = parseInt(menuItem.price);
-                        menuPrice.textContent = `Rp${price.toFixed(2)}`;
-
-                        const menuDescription = document.createElement('td');
-                        menuDescription.textContent = menuItem.description;
-
-                        row.appendChild(menuImage);
-                        row.appendChild(menuName);
-                        row.appendChild(menuId);
-                        row.appendChild(menuPrice);
-                        row.appendChild(menuDescription);
-
-                        tableBody.appendChild(row);
-                        console.log(menuItem.imageURL);
                     }
                 }
             });
         }
 
-        document.addEventListener('DOMContentLoaded', fetchandDisplayMenu);
-        console.log
+        document.addEventListener('DOMContentLoaded', () =>  {
+            document.querySelector('.food-menu').addEventListener('click', (e) => {
+                e.preventDefault();
+                fetchandDisplayMenu('food');
+            });
+
+            document.querySelector('.drinks-menu').addEventListener('click', (e) => {
+                e.preventDefault();
+                fetchandDisplayMenu('drinks');
+            });
+
+            // Display all menu items 
+            fetchandDisplayMenu('');
+        });
     </script>
 </body>
 </html>

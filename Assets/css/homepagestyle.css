@@ -413,6 +413,13 @@ button:hover {
   background-color: #4cae4c;
 }
 
+select,
+.category option {
+  padding: 12px;
+  border: 1px solid rgba(0, 0, 0, .5);
+  border-radius: 6px;
+}
+
 @keyframes fade {
   from {opacity: .4}
   to {opacity: 1}
