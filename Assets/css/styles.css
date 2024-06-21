@@ -292,7 +292,7 @@ select:focus {
 }
 
 .notification.success {
-    background-color: #4CAF50; /* Hijau untuk sukses */
+    background-color: #4CAF50CC; /* Hijau untuk sukses */
 }
 
 .notification.error {

@@ -1,88 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Table</title>
 
     <!--================= Remix Icon =================-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.1.0/remixicon.css"/>
-    <link rel="stylesheet" href="../Assets/css/styles.css">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.1.0/remixicon.css"
+    />
+    <link rel="stylesheet" href="../Assets/css/styles.css" />
+  </head>
+  <body>
     <div id="notification" class="notification hidden"></div>
     <section class="sidebar">
-        <div class="sidebar-top">
-            <a href="" class="sidebar-title">Brew & Bounty</a>
-            <img src="../Assets/coffee-beans.png" alt="Logo Icon">
-        </div>
-        
-        <hr class="line">
+      <div class="sidebar-top">
+        <a href="" class="sidebar-title">Brew & Bounty</a>
+        <img src="../Assets/coffee-beans.png" alt="Logo Icon" />
+      </div>
 
-        <ul class="sidebar-content">
-            <a href=""><li><i class="ri-home-2-line"></i>Home</li></a>
-            <li id="menu"><i class="ri-restaurant-2-line"></i>Menu</li>
-                <a href="" class="menu-dropdown food-menu"><li><i class="ri-bowl-fill"></i>Foods</li></a>
-                <a href="" class="menu-dropdown drinks-menu"><li><i class="ri-cup-line"></i>Drinks</li></a>
-            <a href="cashiers.html"><li><i class="ri-admin-line"></i>Cashiers</li></a>
-        </ul>
+      <hr class="line" />
+
+      <ul class="sidebar-content">
+        <a href=""
+          ><li><i class="ri-home-2-line"></i>Home</li></a
+        >
+        <li id="menu"><i class="ri-restaurant-2-line"></i>Menu</li>
+        <a href="" class="menu-dropdown food-menu"
+          ><li><i class="ri-bowl-fill"></i>Foods</li></a
+        >
+        <a href="" class="menu-dropdown drinks-menu"
+          ><li><i class="ri-cup-line"></i>Drinks</li></a
+        >
+        <a href="cashiers.html"
+          ><li><i class="ri-admin-line"></i>Cashiers</li></a
+        >
+      </ul>
     </section>
 
     <section class="main-content">
-        <div class="top">
-            <a href="" class="top-title">Brew & Bounty > <b>Menu</b></a>
-            <a href="../addMenu.html" class="add-button">Add Items</a>
+      <div class="top">
+        <a href="" class="top-title">Brew & Bounty > <b>Menu</b></a>
+        <a href="../addMenu.html" class="add-button">Add Items</a>
+      </div>
+
+      <h1 class="main-title">Items</h1>
+
+      <div class="table">
+        <div class="table-option">
+          <label for="filter" id="filter-label"
+            ><i class="ri-filter-3-line"></i>Filter</label
+          >
+          <select name="filter" id="filter" hidden>
+            <option value="ascending">Ascending</option>
+            <option value="descending">Descending</option>
+            <option value="orderDate">Order Date</option>
+          </select>
+          <div id="custom-dropdown" class="custom-dropdown">
+            <div class="option" data-value="ascending">Ascending</div>
+            <div class="option" data-value="descending">Descending</div>
+            <div class="option" data-value="orderDate">Order Date</div>
+          </div>
         </div>
 
-        <h1 class="main-title">Items</h1>
+        <div class="table-content" id="table-content">
+          <table>
+            <thead>
+              <tr>
+                <th>Menu Image</th>
+                <th>Food Menu</th>
+                <th>Menu ID</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Action</th>
+              </tr>
+            </thead>
 
-        <div class="table">
-            <div class="table-option">
-                <label for="filter" id="filter-label"><i class="ri-filter-3-line"></i>Filter</label>
-                <select name="filter" id="filter" hidden>
-                    <option value="ascending">Ascending</option>
-                    <option value="descending">Descending</option>
-                    <option value="orderDate">Order Date</option>
-                </select>
-                <div id="custom-dropdown" class="custom-dropdown">
-                    <div class="option" data-value="ascending">Ascending</div>
-                    <div class="option" data-value="descending">Descending</div>
-                    <div class="option" data-value="orderDate">Order Date</div>
-                </div>    
+            <tbody id="table-body"></tbody>
+          </table>
+
+          <form class="pagination">
+            <label for="dataperpage">Lines per Page</label>
+            <select name="dataperpage" id="dataperpage">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
+            <p>1 - 5 out of ??</p>
+            <div class="pagination-button">
+              <a href=""><i class="ri-arrow-left-s-line"></i></a>
+              <a href=""><i class="ri-arrow-right-s-line"></i></a>
             </div>
-
-            <div class="table-content" id="table-content">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Menu Image</th>
-                            <th>Food Menu</th>
-                            <th>Menu ID</th>
-                            <th>Price</th>
-                            <th>Description</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="table-body"></tbody>
-                </table>
-
-                <form class="pagination">
-                    <label for="dataperpage">Lines per Page</label>
-                    <select name="dataperpage" id="dataperpage">
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
-                    </select>
-                    <p>1 - 5 out of ??</p>
-                    <div class="pagination-button">
-                        <a href=""><i class="ri-arrow-left-s-line"></i></a>
-                        <a href=""><i class="ri-arrow-right-s-line"></i></a>
-                    </div>
-                </form>
-            </div>
+          </form>
         </div>
+      </div>
     </section>
 
     <script src="../Assets/js/script.js"></script>
@@ -90,163 +103,230 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getDatabase, ref, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-        import { getStorage, ref as storageRef, deleteObject, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyDzURQckDxjVYzWHcRSfq0VTBjqwQYhUg0",
-            authDomain: "brew-bounty-admin.firebaseapp.com",
-            databaseURL: "https://brew-bounty-admin-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "brew-bounty-admin",
-            storageBucket: "brew-bounty-admin.appspot.com",
-            messagingSenderId: "108525876940",
-            appId: "1:108525876940:web:e8eff02f81f9425d65f469",
-            measurementId: "G-124F208GM2"
-        };
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        onValue,
+        remove,
+        update,
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+      import {
+        getStorage,
+        ref as storageRef,
+        deleteObject,
+        uploadBytes,
+        getDownloadURL,
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-        const storage = getStorage(app);
-        const menuRef = ref(database, 'menu');
+      const firebaseConfig = {
+        apiKey: "AIzaSyDzURQckDxjVYzWHcRSfq0VTBjqwQYhUg0",
+        authDomain: "brew-bounty-admin.firebaseapp.com",
+        databaseURL:
+          "https://brew-bounty-admin-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "brew-bounty-admin",
+        storageBucket: "brew-bounty-admin.appspot.com",
+        messagingSenderId: "108525876940",
+        appId: "1:108525876940:web:e8eff02f81f9425d65f469",
+        measurementId: "G-124F208GM2",
+      };
 
-        function fetchAndDisplayMenu(filterType) {
-            onValue(menuRef, (snapshot) => {
-                const data = snapshot.val();
-                const tableBody = document.getElementById('table-body');
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app);
+      const storage = getStorage(app);
+      const menuRef = ref(database, "menu");
 
-                tableBody.innerHTML = '';
+      function fetchAndDisplayMenu(filterType, sortOrder) {
+        onValue(menuRef, (snapshot) => {
+          const data = snapshot.val();
+          const tableBody = document.getElementById("table-body");
 
-                for (const key in data) {
-                    if (data.hasOwnProperty(key)) {
-                        const menuItem = data[key];
-                        if (!filterType || (filterType === 'food' && menuItem.id.startsWith('FD')) ||
-                            (filterType === 'drinks' && menuItem.id.startsWith('DR'))) {
-                            
-                            const row = document.createElement('tr');
+          tableBody.innerHTML = "";
 
-                            const menuImage = document.createElement('td');
-                            const img = document.createElement('img');
-                            img.src = menuItem.imageURL;
-                            img.alt = `${menuItem.name} Photo`;
-                            img.className = 'table-img';
-                            img.onerror = () => {
-                                console.error(`Failed to load image from URL: ${menuItem.imageURL}`);
-                            };
-                            menuImage.appendChild(img);
-
-                            const menuName = document.createElement('td');
-                            menuName.textContent = menuItem.name;
-
-                            const menuId = document.createElement('td');
-                            menuId.textContent = menuItem.id;
-
-                            const menuPrice = document.createElement('td');
-                            const price = parseInt(menuItem.price);
-                            menuPrice.textContent = `Rp${price.toLocaleString('id-ID')}`;
-
-                            const menuDescription = document.createElement('td');
-                            menuDescription.textContent = menuItem.description;
-
-                            const actionTd = document.createElement('td');
-
-                            // Div Action Button
-                            const divActionButton = document.createElement('div');
-                            divActionButton.className = 'actionButton';
-                            actionTd.appendChild(divActionButton);
-
-                            // Edit button
-                            const editButton = document.createElement('button');
-                            editButton.textContent = 'Edit';
-                            editButton.className = 'edit-button';
-                            editButton.onclick = () => editMenuItem(key, menuItem);
-                            divActionButton.appendChild(editButton);
-
-                            // Delete button
-                            const deleteButton = document.createElement('button');
-                            deleteButton.textContent = 'Delete';
-                            deleteButton.className = 'delete-button';
-                            deleteButton.onclick = () => deleteMenuItem(key, menuItem.imageURL);
-                            divActionButton.appendChild(deleteButton);
-
-                            row.appendChild(menuImage);
-                            row.appendChild(menuName);
-                            row.appendChild(menuId);
-                            row.appendChild(menuPrice);
-                            row.appendChild(menuDescription);
-                            row.appendChild(actionTd);
-
-                            tableBody.appendChild(row);
-                        }
-                    }
-                }
-            });
-        }
-
-        function deleteMenuItem(key, imageURL) {
-            if (confirm('Are you sure you want to delete this item?')) {
-                const itemRef = ref(database, `menu/${key}`);
-                const imageRef = storageRef(storage, imageURL);
-
-                // Delete from Realtime Database
-                remove(itemRef).then(() => {
-                    console.log('Item deleted from database');
-                    showNotification('Item deleted successfully', 'success');
-                }).catch((error) => {
-                    console.error('Error deleting item from database:', error);
-                    showNotification('Error deleting item', 'error');
-                });
-
-                // Delete image from Storage
-                deleteObject(imageRef).then(() => {
-                    console.log('Image deleted from storage');
-                    showNotification('Image deleted successfully', 'success');
-                }).catch((error) => {
-                    console.error('Error deleting image from storage:', error);
-                    showNotification('Error deleting image', 'error');
-                });
+          // Convert data object to array for sorting
+          let menuItems = [];
+          for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+              const menuItem = data[key];
+              menuItem.key = key; // Keep the key for later use (edit/delete)
+              menuItems.push(menuItem);
             }
-        }
+          }
 
-        function editMenuItem(key, menuItem) {
-    // Mengarahkan pengguna ke halaman edit.html dengan membawa data item yang akan diedit
-    window.location.href = `edit.html?key=${key}&name=${menuItem.name}&price=${menuItem.price}&description=${menuItem.description}&imageURL=${menuItem.imageURL}`;
-}
+          // Filter by type if necessary
+          if (filterType) {
+            menuItems = menuItems.filter(
+              (item) =>
+                (filterType === "food" && item.id.startsWith("FD")) ||
+                (filterType === "drinks" && item.id.startsWith("DR"))
+            );
+          }
 
+          // Sort by selected order
+          if (sortOrder === "ascending") {
+            menuItems.sort((a, b) => a.name.localeCompare(b.name));
+          } else if (sortOrder === "descending") {
+            menuItems.sort((a, b) => b.name.localeCompare(a.name));
+          } else if (sortOrder === "orderDate") {
+            menuItems.sort((a, b) => new Date(b.date) - new Date(a.date));
+          }
 
+          // Display sorted and filtered items
+          menuItems.forEach((menuItem) => {
+            const row = document.createElement("tr");
 
+            const menuImage = document.createElement("td");
+            const img = document.createElement("img");
+            img.src = menuItem.imageURL;
+            img.alt = `${menuItem.name} Photo`;
+            img.className = "table-img";
+            img.onerror = () => {
+              console.error(
+                `Failed to load image from URL: ${menuItem.imageURL}`
+              );
+            };
+            menuImage.appendChild(img);
 
-        document.addEventListener('DOMContentLoaded', () => {
+            const menuName = document.createElement("td");
+            menuName.textContent = menuItem.name;
 
-            document.querySelector('.food-menu').addEventListener('click', (e) => {
-                e.preventDefault();
-                fetchAndDisplayMenu('food');
-            });
+            const menuId = document.createElement("td");
+            menuId.textContent = menuItem.id;
 
-            document.querySelector('.drinks-menu').addEventListener('click', (e) => {
-                e.preventDefault();
-                fetchAndDisplayMenu('drinks');
-            });
+            const menuPrice = document.createElement("td");
+            const price = parseInt(menuItem.price);
+            menuPrice.textContent = `Rp${price.toLocaleString("id-ID")}`;
 
-            document.querySelector('#menu').addEventListener('click', (e) => {
-                e.preventDefault();
-                fetchAndDisplayMenu('');
-            })
+            const menuDescription = document.createElement("td");
+            menuDescription.textContent = menuItem.description;
 
-            fetchAndDisplayMenu('');
+            const actionTd = document.createElement("td");
+
+            // Div Action Button
+            const divActionButton = document.createElement("div");
+            divActionButton.className = "actionButton";
+            actionTd.appendChild(divActionButton);
+
+            // Edit button
+            const editButton = document.createElement("button");
+            editButton.textContent = "Edit";
+            editButton.className = "edit-button";
+            editButton.onclick = () => editMenuItem(menuItem.key, menuItem);
+            divActionButton.appendChild(editButton);
+
+            // Delete button
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.className = "delete-button";
+            deleteButton.onclick = () =>
+              deleteMenuItem(menuItem.key, menuItem.imageURL);
+            divActionButton.appendChild(deleteButton);
+
+            row.appendChild(menuImage);
+            row.appendChild(menuName);
+            row.appendChild(menuId);
+            row.appendChild(menuPrice);
+            row.appendChild(menuDescription);
+            row.appendChild(actionTd);
+
+            tableBody.appendChild(row);
+          });
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const filterSelect = document.getElementById("filter");
+
+        // Event listeners for filter dropdown and menu types
+        filterSelect.addEventListener("change", () => {
+          const sortOrder = filterSelect.value;
+          fetchAndDisplayMenu(null, sortOrder);
         });
 
-        function showNotification(message, type) {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.classList.remove('hidden', 'success', 'error');
-            notification.classList.add('visible', type);
+        document.querySelector(".food-menu").addEventListener("click", (e) => {
+          e.preventDefault();
+          const sortOrder = filterSelect.value;
+          fetchAndDisplayMenu("food", sortOrder);
+        });
 
-            setTimeout(() => {
-                notification.classList.remove('visible');
-                notification.classList.add('hidden');
-            }, 3000);
+        document
+          .querySelector(".drinks-menu")
+          .addEventListener("click", (e) => {
+            e.preventDefault();
+            const sortOrder = filterSelect.value;
+            fetchAndDisplayMenu("drinks", sortOrder);
+          });
+
+        // Display all menu items initially
+        fetchAndDisplayMenu();
+      });
+
+      function deleteMenuItem(key, imageURL) {
+        if (confirm("Are you sure you want to delete this item?")) {
+          const itemRef = ref(database, `menu/${key}`);
+          const imageRef = storageRef(storage, imageURL);
+
+          // Delete from Realtime Database
+          remove(itemRef)
+            .then(() => {
+              console.log("Item deleted from database");
+              showNotification("Item deleted successfully", "success");
+            })
+            .catch((error) => {
+              console.error("Error deleting item from database:", error);
+              showNotification("Error deleting item", "error");
+            });
+
+          // Delete image from Storage
+          deleteObject(imageRef)
+            .then(() => {
+              console.log("Image deleted from storage");
+              showNotification("Image deleted successfully", "success");
+            })
+            .catch((error) => {
+              console.error("Error deleting image from storage:", error);
+              showNotification("Error deleting image", "error");
+            });
         }
+      }
+
+      function editMenuItem(key, menuItem) {
+        // Mengarahkan pengguna ke halaman edit.html dengan membawa data item yang akan diedit
+        window.location.href = `edit.html?key=${key}&name=${menuItem.name}&price=${menuItem.price}&description=${menuItem.description}&imageURL=${menuItem.imageURL}`;
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelector(".food-menu").addEventListener("click", (e) => {
+          e.preventDefault();
+          fetchAndDisplayMenu("food");
+        });
+
+        document
+          .querySelector(".drinks-menu")
+          .addEventListener("click", (e) => {
+            e.preventDefault();
+            fetchAndDisplayMenu("drinks");
+          });
+
+        document.querySelector("#menu").addEventListener("click", (e) => {
+          e.preventDefault();
+          fetchAndDisplayMenu("");
+        });
+
+        fetchAndDisplayMenu("");
+      });
+
+      function showNotification(message, type) {
+        const notification = document.getElementById("notification");
+        notification.textContent = message;
+        notification.classList.remove("hidden", "success", "error");
+        notification.classList.add("visible", type);
+
+        setTimeout(() => {
+          notification.classList.remove("visible");
+          notification.classList.add("hidden");
+        }, 3000);
+      }
     </script>
-</body>
+  </body>
 </html>
