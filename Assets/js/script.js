@@ -19,15 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-    document.querySelectorAll('.custom-dropdown .option').forEach(option => {
-        option.addEventListener('click', function() {
-            const value = this.getAttribute('data-value');
-            document.getElementById('filter').value = value;
-            dropdown.style.display = 'none';
-            console.log('Selected value:', value); // For demonstration, you can handle the value as needed
-        });
-    });
 });
 
 console.log ('script.js loaded');

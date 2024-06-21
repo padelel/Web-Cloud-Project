@@ -150,19 +150,24 @@
 
                             const actionTd = document.createElement('td');
 
+                            // Div Action Button
+                            const divActionButton = document.createElement('div');
+                            divActionButton.className = 'actionButton';
+                            actionTd.appendChild(divActionButton);
+
                             // Edit button
                             const editButton = document.createElement('button');
                             editButton.textContent = 'Edit';
                             editButton.className = 'edit-button';
                             editButton.onclick = () => editMenuItem(key, menuItem);
-                            actionTd.appendChild(editButton);
+                            divActionButton.appendChild(editButton);
 
                             // Delete button
                             const deleteButton = document.createElement('button');
                             deleteButton.textContent = 'Delete';
                             deleteButton.className = 'delete-button';
                             deleteButton.onclick = () => deleteMenuItem(key, menuItem.imageURL);
-                            actionTd.appendChild(deleteButton);
+                            divActionButton.appendChild(deleteButton);
 
                             row.appendChild(menuImage);
                             row.appendChild(menuName);
@@ -212,7 +217,6 @@
 
 
         document.addEventListener('DOMContentLoaded', () => {
-            fetchAndDisplayMenu();
 
             document.querySelector('.food-menu').addEventListener('click', (e) => {
                 e.preventDefault();
@@ -223,6 +227,13 @@
                 e.preventDefault();
                 fetchAndDisplayMenu('drinks');
             });
+
+            document.querySelector('#menu').addEventListener('click', (e) => {
+                e.preventDefault();
+                fetchAndDisplayMenu('');
+            })
+
+            fetchAndDisplayMenu('');
         });
 
         function showNotification(message, type) {
