@@ -15,10 +15,10 @@ document.addEventListener('DOMContentLoaded', function() {
         menu.addEventListener('click', function (event) {
             event.preventDefault();
             for(let i = 0; i < menuDropdown.length; i++) {
-                menuDropdown[i].classList.toggle('active');
+                menuDropdown[i].classList.toggle('display');
             }
         });
     }
-});
 
-console.log ('script.js loaded');
+
+});

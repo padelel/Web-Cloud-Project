@@ -104,12 +104,15 @@ select:focus {
     padding-left: 1rem;
 }
 
-.sidebar-content .menu-dropdown.active {
+.sidebar-content .menu-dropdown.display {
     display: flex;
 }
 
 .sidebar-content li:hover,
-.sidebar-content .menu-dropdown:hover {
+.sidebar-content .menu-dropdown:hover,
+.sidebar-content #menu,
+.sidebar-content li.active,
+.sidebar-content .menu-dropdown.active {
     background-color: #7a5e46;
 }
 

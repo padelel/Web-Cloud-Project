@@ -49,10 +49,10 @@
 
       <div class="table">
         <div class="table-option">
-          <label for="filter" id="filter-label"
+          <label for="sort" id="sort-label"
             ><i class="ri-filter-3-line"></i>Filter</label
           >
-          <select name="filter" id="filter">
+          <select name="sort" id="sort">
             <option value="ascending">Ascending</option>
             <option value="descending">Descending</option>
             <option value="inputDate">Input Date</option>
@@ -144,14 +144,7 @@
           tableBody.innerHTML = "";
 
           // Convert data object to array for sorting
-          let menuItems = [];
-          for (const key in data) {
-            if (data.hasOwnProperty(key)) {
-              const menuItem = data[key];
-              menuItem.key = key; // Keep the key for later use (edit/delete)
-              menuItems.push(menuItem);
-            }
-          }
+          let menuItems = Object.keys(data).map(key => ({ id: key, ...data[key]}));
 
           // Filter by type if necessary
           if (filterType) {
@@ -170,23 +163,6 @@
           } else if (sortOrder === "inputDate") {
             menuItems.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
           }
-
-          // Filter by type & Sort by selected order 
-          // if(filtertype === 'food' && sortOrder === "ascending") {
-          //   menuItems = menuItems.filter(item.id.startsWith("FD")) && menuItems.sort((a, b) => a.name.localeCompare(b.name));
-          // } else if (filtertype === 'food' && sortOrder === "descending") {
-          //   menuItems = menuItems.filter(item.id.startsWith("FD")) && menuItems.sort((a, b) => b.name - (a.name));
-          // } else if (filtertype === 'food' && sortOrder === "inputDate") {
-          //   menuItems = menuItems.filter(item.id.startsWith("FD")) && menuItems.sort((a, b) => new Date(b.timeStamp) - new Date (a.timeStamp));
-          // } 
-          
-          // else if(filtertype === 'drink' && sortOrder === "ascending") {
-          //   menuItems = menuItems.filter(item.id.startsWith("DR")) && menuItems.sort((a, b) => a.name.localeCompare(b.name));
-          // } else if (filtertype === 'drink' && sortOrder === "descending") {
-          //   menuItems = menuItems.filter(item.id.startsWith("DR")) && menuItems.sort((a, b) => b.name - (a.name));
-          // } else {
-          //   menuItems = menuItems.filter(item.id.startsWith("DR")) && menuItems.sort((a, b) => new Date(b.timeStamp) - new Date (a.timeStamp));
-          // }
 
           // Display sorted and filtered items
           menuItems.forEach((menuItem) => {
@@ -252,30 +228,46 @@
       }
 
       document.addEventListener("DOMContentLoaded", () => {
-        const filterSelect = document.getElementById("filter");
+        const filterElement = document.getElementById('sort');
 
-        // Event listeners for filter dropdown and menu types
-        filterSelect.addEventListener("change", () => {
-          const sortOrder = filterSelect.value;
-          fetchAndDisplayMenu(null, sortOrder);
+        function setActiveMenu(type) {
+        document.querySelectorAll('.menu-dropdown, #menu').forEach(el => {
+          el.classList.remove('active');
         });
 
+        if (type === 'food') {
+          document.querySelector('.food-menu').classList.add('active');
+        } else if (type === 'drinks') {
+          document.querySelector('.drinks-menu').classList.add('active');
+        } else {
+          document.getElementById('menu').classList.add('display');
+        }
+      }
+   
         document.querySelector(".food-menu").addEventListener("click", (e) => {
           e.preventDefault();
-          const sortOrder = filterSelect.value;
-          fetchAndDisplayMenu("food", sortOrder);
+          setActiveMenu('food');
+          fetchAndDisplayMenu("food", filterElement.value);
         });
 
-        document
-          .querySelector(".drinks-menu")
-          .addEventListener("click", (e) => {
+        document.querySelector(".drinks-menu").addEventListener("click", (e) => {
             e.preventDefault();
-            const sortOrder = filterSelect.value;
-            fetchAndDisplayMenu("drinks", sortOrder);
+            setActiveMenu('drinks');
+            fetchAndDisplayMenu("drinks", filterElement.value);
           });
 
-        // Display all menu items initially
-        fetchAndDisplayMenu();
+        document.querySelector("#menu").addEventListener("click", (e) => {
+          e.preventDefault();
+          setActiveMenu('');
+          fetchAndDisplayMenu("", filterElement.value);
+        });
+
+        filterElement.addEventListener('change', (e) => {
+          const selectedFilterType = document.query('.menu-dropdown:active')?.dataset.type || '';
+          fetchAndDisplayMenu(selectedFilterType, e.target.value);
+        });
+
+        fetchAndDisplayMenu("", filterElement.value);
       });
 
       function deleteMenuItem(key, imageURL) {
@@ -311,25 +303,6 @@
         // Mengarahkan pengguna ke halaman edit.html dengan membawa data item yang akan diedit
         window.location.href = `edit.html?category=${menuItem.category}key=${key}&name=${menuItem.name}&price=${menuItem.price}&description=${menuItem.description}&imageURL=${menuItem.imageURL}`;
       }
-
-      document.addEventListener("DOMContentLoaded", () => {
-        document.querySelector(".food-menu").addEventListener("click", (e) => {
-          e.preventDefault();
-          fetchAndDisplayMenu("food", document.getElementById('filter').value);
-        });
-
-        document.querySelector(".drinks-menu").addEventListener("click", (e) => {
-            e.preventDefault();
-            fetchAndDisplayMenu("drinks", document.getElementById('filter').value);
-          });
-
-        document.querySelector("#menu").addEventListener("click", (e) => {
-          e.preventDefault();
-          fetchAndDisplayMenu("");
-        });
-
-        fetchAndDisplayMenu("");
-      });
 
       function showNotification(message, type) {
         const notification = document.getElementById("notification");
