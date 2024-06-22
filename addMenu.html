@@ -97,16 +97,19 @@
                 const storageReference = storageRef(storage, `images/${imageFile.name}`);
                 await uploadBytes(storageReference, imageFile);
                 const imageUrl = await getDownloadURL(storageReference);
-
+                
                 // Save the menu item data to Realtime Database
                 const newMenuItemRef = push(ref(database, 'menu'));
+                const timeStamp = Date.now();
+
                 await set(newMenuItemRef, {
                     id: menuID,
                     category,
                     name,
                     description,
                     price,
-                    imageURL: imageUrl // Save the image URL
+                    imageURL: imageUrl, // Save the image URL
+                    timeStamp
                 });
 
                 alert('Menu item added successfully');

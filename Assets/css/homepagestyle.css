@@ -421,6 +421,18 @@ select,
   cursor: pointer;
 }
 
+.submitButton {
+  border: none;
+  cursor: pointer;
+  transition: .3s all ease;
+}
+
+.submitButton:hover {
+  background-color: #606060;
+  color: white;
+}
+
+
 @keyframes fade {
   from {opacity: .4}
   to {opacity: 1}

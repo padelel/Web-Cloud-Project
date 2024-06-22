@@ -52,10 +52,10 @@
           <label for="filter" id="filter-label"
             ><i class="ri-filter-3-line"></i>Filter</label
           >
-          <select name="filter" id="filter" hidden>
+          <select name="filter" id="filter">
             <option value="ascending">Ascending</option>
             <option value="descending">Descending</option>
-            <option value="orderDate">Order Date</option>
+            <option value="inputDate">Input Date</option>
           </select>
           <div id="custom-dropdown" class="custom-dropdown">
             <div class="option" data-value="ascending">Ascending</div>
@@ -167,9 +167,26 @@
             menuItems.sort((a, b) => a.name.localeCompare(b.name));
           } else if (sortOrder === "descending") {
             menuItems.sort((a, b) => b.name.localeCompare(a.name));
-          } else if (sortOrder === "orderDate") {
-            menuItems.sort((a, b) => new Date(b.date) - new Date(a.date));
+          } else if (sortOrder === "inputDate") {
+            menuItems.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
           }
+
+          // Filter by type & Sort by selected order 
+          // if(filtertype === 'food' && sortOrder === "ascending") {
+          //   menuItems = menuItems.filter(item.id.startsWith("FD")) && menuItems.sort((a, b) => a.name.localeCompare(b.name));
+          // } else if (filtertype === 'food' && sortOrder === "descending") {
+          //   menuItems = menuItems.filter(item.id.startsWith("FD")) && menuItems.sort((a, b) => b.name - (a.name));
+          // } else if (filtertype === 'food' && sortOrder === "inputDate") {
+          //   menuItems = menuItems.filter(item.id.startsWith("FD")) && menuItems.sort((a, b) => new Date(b.timeStamp) - new Date (a.timeStamp));
+          // } 
+          
+          // else if(filtertype === 'drink' && sortOrder === "ascending") {
+          //   menuItems = menuItems.filter(item.id.startsWith("DR")) && menuItems.sort((a, b) => a.name.localeCompare(b.name));
+          // } else if (filtertype === 'drink' && sortOrder === "descending") {
+          //   menuItems = menuItems.filter(item.id.startsWith("DR")) && menuItems.sort((a, b) => b.name - (a.name));
+          // } else {
+          //   menuItems = menuItems.filter(item.id.startsWith("DR")) && menuItems.sort((a, b) => new Date(b.timeStamp) - new Date (a.timeStamp));
+          // }
 
           // Display sorted and filtered items
           menuItems.forEach((menuItem) => {
@@ -292,20 +309,18 @@
 
       function editMenuItem(key, menuItem) {
         // Mengarahkan pengguna ke halaman edit.html dengan membawa data item yang akan diedit
-        window.location.href = `edit.html?key=${key}&name=${menuItem.name}&price=${menuItem.price}&description=${menuItem.description}&imageURL=${menuItem.imageURL}`;
+        window.location.href = `edit.html?category=${menuItem.category}key=${key}&name=${menuItem.name}&price=${menuItem.price}&description=${menuItem.description}&imageURL=${menuItem.imageURL}`;
       }
 
       document.addEventListener("DOMContentLoaded", () => {
         document.querySelector(".food-menu").addEventListener("click", (e) => {
           e.preventDefault();
-          fetchAndDisplayMenu("food");
+          fetchAndDisplayMenu("food", document.getElementById('filter').value);
         });
 
-        document
-          .querySelector(".drinks-menu")
-          .addEventListener("click", (e) => {
+        document.querySelector(".drinks-menu").addEventListener("click", (e) => {
             e.preventDefault();
-            fetchAndDisplayMenu("drinks");
+            fetchAndDisplayMenu("drinks", document.getElementById('filter').value);
           });
 
         document.querySelector("#menu").addEventListener("click", (e) => {
