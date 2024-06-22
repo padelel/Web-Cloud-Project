@@ -110,7 +110,7 @@ select:focus {
 
 .sidebar-content li:hover,
 .sidebar-content .menu-dropdown:hover,
-.sidebar-content #menu,
+.sidebar-content #men.active,
 .sidebar-content li.active,
 .sidebar-content .menu-dropdown.active {
     background-color: #7a5e46;
@@ -193,11 +193,11 @@ select:focus {
     width: 150px;
 }
 
-.active {
+/* .active {
     display: flex;
     flex-direction: column;
     gap: 8px;
-}
+} */
 
 .custom-dropdown .option {
     padding: 8px 12px;

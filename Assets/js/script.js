@@ -4,12 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const menu = document.getElementById('menu');
     const menuDropdown = document.getElementsByClassName('menu-dropdown');
 
-    if (filterLabel && dropdown) {
-        filterLabel.addEventListener('click', function(event) {
-            dropdown.classList.toggle('active');
-            event.stopPropagation();
-        });    
-    }
 
     if(menu && menuDropdown) {
         menu.addEventListener('click', function (event) {
