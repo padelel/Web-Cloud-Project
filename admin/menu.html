@@ -42,12 +42,10 @@
         <select name="sort" id="sort">
           <option value="ascending">Ascending</option>
           <option value="descending">Descending</option>
-          <option value="inputDate">Input Date</option>
         </select>
         <div id="custom-dropdown" class="custom-dropdown">
           <div class="option" data-value="ascending">Ascending</div>
           <div class="option" data-value="descending">Descending</div>
-          <div class="option" data-value="orderDate">Order Date</div>
         </div>
       </div>
 
@@ -143,8 +141,6 @@
             menuItems.sort((a, b) => a.name.localeCompare(b.name));
           } else if (sortOrder === "descending") {
             menuItems.sort((a, b) => b.name.localeCompare(a.name));
-          } else if (sortOrder === "inputDate") {
-            menuItems.sort((a, b) => (new Date(b.timeStamp) - new Date(a.timeStamp)));
           }
   
           menuItems.forEach((menuItem) => {
@@ -226,7 +222,7 @@
           document.getElementById('menu').classList.add('display');
         }
       }
-  
+
       document.querySelector(".food-menu").addEventListener("click", (e) => {
         e.preventDefault();
         setActiveMenu('food');
@@ -241,14 +237,15 @@
   
       document.querySelector("#menu").addEventListener("click", (e) => {
         e.preventDefault();
+        setActiveMenu('');
         fetchAndDisplayMenu("", filterElement.value);
       });
   
-      // filterElement.addEventListener('change', (e) => {
-      //   const activeMenu = document.querySelector('.menu-dropdown.active');
-      //   const activeMenuType = activeMenu ? (activeMenu.classList.contains('food-menu') ? 'food' : 'drink') : '';
-      //   fetchAndDisplayMenu(activeMenuType, e.target.value);
-      // });
+      filterElement.addEventListener('change', (e) => {
+        const activeMenu = document.querySelector('.menu-dropdown.active');
+        const activeMenuType = activeMenu ? (activeMenu.classList.contains('food-menu') ? 'food' : 'drink') : '';
+        fetchAndDisplayMenu(activeMenuType, e.target.value);
+      });
   
       fetchAndDisplayMenu("", filterElement.value);
     });
