@@ -96,14 +96,17 @@
       </div>
     </section>
 
-    <script src="../Assets/js/script.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-      import { getDatabase, ref, onValue, remove, } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-      import { getStorage, ref as storageRef, deleteObject, } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+  <script src="../Assets/js/script.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+  <script type="module">
+    // Import Firebase libraries
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import { getStorage, ref as storageRef, deleteObject } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
+    // Your web app's Firebase configuration
       const firebaseConfig = {
         apiKey: "AIzaSyDzURQckDxjVYzWHcRSfq0VTBjqwQYhUg0",
         authDomain: "brew-bounty-admin.firebaseapp.com",
@@ -115,9 +118,9 @@
         measurementId: "G-124F208GM2"
       };
 
-      const app = initializeApp(firebaseConfig);
-      const database = getDatabase(app);
-      const storage = getStorage(app);
+      firebase.initializeApp(firebaseConfig);
+      const database = firebase.database();
+      const storage = firebase.storage();
 
       function fetchAndDisplayCashiers(sortOrder) {
         const cashiersRef = ref(database, "cashiers");
@@ -185,7 +188,7 @@
                 deleteButton.textContent = "Delete";
                 deleteButton.className = "delete-button";
                 deleteButton.onclick = () => 
-                  deleteCashierItem(cashierItem.id, cashierItem.profileImageUrl);
+                  deleteCashierItem(cashierItem.endDate, cashierItem.id, cashierItem.profileImageUrl);
                 divActionButton.appendChild(deleteButton);
 
                 row.appendChild(cashierId);
@@ -216,38 +219,55 @@
         fetchAndDisplayCashiers(filterElement.value);
       });
 
-      function deleteCashierItem(id, profileImageUrl) {
-        if (confirm("Are you sure you want to delete this data?")) {
-          const itemRef = ref(database, `cashiers/${id}`);
-          const imageRef = storageRef(storage, profileImageUrl);
 
-          // Gabungkan kedua operasi penghapusan ke dalam satu Promise.all
-              remove(itemRef)
-                .then(() => {
-                    console.log("Item deleted from database");
-                    showNotification("Item deleted successfully", "success");
+      async function deleteCashierItem(endDate, id, profileImageUrl) {
+      try {
+        const menuItemRef = database.ref(`cashiers/${endDate.toLowerCase()}/${id}`);
+        await menuItemRef.remove();
 
-                })
-                .catch((error) => {
-                    console.error("Error deleting item from database:", error);
-                    showNotification("Error deleting item", "error");
-                });
-              
-              deleteObject(imageRef)
-                .then(() => {
-                    console.log("Image deleted from storage");
-                    showNotification("Image deleted successfully", "success");
-                })
-                .catch((error) => {
-                    console.error("Error deleting image from storage:", error);
-                    showNotification("Error deleting image", "error");
-                });
-            }
-          }
+        if (imageURL) {
+          const imageRef = storage.refFromURL(profileImageUrl);
+          await imageRef.delete();
+        }
+
+        alert('Cashier  deleted successfully');
+        fetchAndDisplayMenu(category);
+      } catch (error) {
+        alert('Error deleting menu item: ' + error);
+      }
+    }
+
+      // function deleteCashierItem(endDate, id, profileImageUrl) {
+      //   if (confirm("Are you sure you want to delete this data?")) {
+      //     const itemRef = ref(database, `cashiers/${endDate}/${id}`);
+      //     const imageRef = storageRef(storage, profileImageUrl);
+        
+      //     console.log("Deleting item from database:", itemRef);
+      //     console.log("Deleting image from storage:", imageRef);
+        
+      //     // Pisahkan operasi penghapusan untuk debug lebih lanjut
+      //     remove(itemRef)
+      //       .then(() => {
+      //         console.log("Item deleted from database");
+      //         showNotification("Item deleted successfully", "success");
+            
+      //         // Hapus gambar setelah data dihapus
+      //         return deleteObject(imageRef);
+      //       })
+      //       .then(() => {
+      //         console.log("Image deleted from storage");
+      //         showNotification("Image deleted successfully", "success");
+      //       })
+      //       .catch((error) => {
+      //         console.error("Error deleting item or image:", error);
+      //         showNotification("Error deleting item or image", "error");
+      //       });
+      //   }
+      // }
 
       function editCashierItem(id, cashierItem) {
         // Redirect user to editCashier.html with item data to edit
-        window.location.href = `editCashiers.html?cashierID=${id}&name${cashierItem.name}&startDate${cashierItem.startDate}&endDate=${cashierItem.endDate}&gender${cashierItem.gender}&imageURL=${cashierItem.imageURL}`;
+        window.location.href = `editCashiers.html?id=${id}}`;
         // const url = new URL(window.location.origin + '/admin/editCashiers.html');
         // url.searchParams.set('id', id);
         // url.searchParams.set('profileImage', cashierItem.profileImage);
@@ -269,6 +289,7 @@
           notification.classList.add("hidden");
         }, 3000);
       }
-    </script>
+  </script>
+      
   </body>
 </html>
