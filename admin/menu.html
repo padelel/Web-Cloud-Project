@@ -244,11 +244,11 @@
         fetchAndDisplayMenu("", filterElement.value);
       });
   
-      filterElement.addEventListener('change', (e) => {
-        const activeMenu = document.querySelector('.menu-dropdown.active');
-        const activeMenuType = activeMenu ? (activeMenu.classList.contains('food-menu') ? 'food' : 'drink') : '';
-        fetchAndDisplayMenu(activeMenuType, e.target.value);
-      });
+      // filterElement.addEventListener('change', (e) => {
+      //   const activeMenu = document.querySelector('.menu-dropdown.active');
+      //   const activeMenuType = activeMenu ? (activeMenu.classList.contains('food-menu') ? 'food' : 'drink') : '';
+      //   fetchAndDisplayMenu(activeMenuType, e.target.value);
+      // });
   
       fetchAndDisplayMenu("", filterElement.value);
     });

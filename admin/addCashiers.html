@@ -78,51 +78,51 @@
         const storage = getStorage(app);
 
         function generateRandomID(prefix) {
-            return prefix + '-' + Math.floor(1000 + Math.random() * 9000).toString();
+          return prefix + '-' + Math.floor(1000 + Math.random() * 9000).toString();
         }
-
+        
         // Set current date to startDate input field
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('startDate').value = today;
-
+        
         document.getElementById('cashierForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
-            const gender = document.getElementById('gender').value;
-            const name = document.getElementById('name').value;
-            const profileImageFile = document.getElementById('profileImage').files[0];
-
+          e.preventDefault();
+        
+          const startDate = document.getElementById('startDate').value;
+          const endDate = document.getElementById('endDate').value;
+          const gender = document.getElementById('gender').value;
+          const name = document.getElementById('name').value;
+          const profileImageFile = document.getElementById('profileImage').files[0];
+        
+          
+          try {
+            // Upload the profile image to Firebase Storage
+            const storagePath = 'cashiers/' + profileImageFile.name; // Construct path for cashiers
+            const storageReference = storageRef(storage, storagePath);
+            await uploadBytes(storageReference, profileImageFile);
+            const profileImageURL = await getDownloadURL(storageReference);
+            
+            // Save the cashier data to the appropriate table in Realtime Database
             const cashierID = generateRandomID("CS");
+            const timeStamp = Date.now();
+        
+            const newCashierData = {
+              id: cashierID,
+              startDate,
+              endDate,
+              gender,
+              name,
+              profileImageURL, // Save the profile image URL
+              timeStamp
+            };
 
-            try {
-                // Upload the profile image to Firebase Storage
-                const storagePath = 'cashiers/' + profileImageFile.name; // Construct path for cashiers
-                const storageReference = storageRef(storage, storagePath);
-                await uploadBytes(storageReference, profileImageFile);
-                const profileImageUrl = await getDownloadURL(storageReference);
-
-                // Save the cashier data to the appropriate table in Realtime Database
-                const newCashierRef = push(ref(database, 'cashiers'));
-                const timeStamp = Date.now();
-
-                await set(newCashierRef, {
-                    id: cashierID,
-                    startDate,
-                    endDate,
-                    gender,
-                    name,
-                    profileImageUrl, // Save the profile image URL
-                    timeStamp
-                });
-
-                alert('Cashier account added successfully');
-                window.location.href = 'cashiers.html'
-                document.getElementById('cashierForm').reset();
-            } catch (e) {
-                alert('Error adding cashier account: ' + e);
-            }
+            await set (ref(database, `cashiers/${cashierID}`), newCashierData);
+            alert('Cashier account added successfully');
+            window.location.href = 'cashiers.html';
+            document.getElementById('cashierForm').reset();
+          } catch (e) {
+            alert('Error adding cashier account: ' + e);
+          }
         });
     </script>
 </body>

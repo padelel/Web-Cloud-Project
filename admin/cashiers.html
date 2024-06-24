@@ -97,9 +97,9 @@
     </section>
 
   <script src="../Assets/js/script.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
   <script type="module">
     // Import Firebase libraries
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -118,9 +118,9 @@
         measurementId: "G-124F208GM2"
       };
 
-      firebase.initializeApp(firebaseConfig);
-      const database = firebase.database();
-      const storage = firebase.storage();
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app);
+      const storage = getStorage(app);
 
       function fetchAndDisplayCashiers(sortOrder) {
         const cashiersRef = ref(database, "cashiers");
@@ -154,7 +154,7 @@
 
                 const profileImage = document.createElement("td");
                 const img = document.createElement("img");
-                img.src = cashierItem.profileImageUrl;
+                img.src = cashierItem.profileImageURL;
                 img.alt = `${cashierItem.name} Photo`;
                 img.width = 50;
                 profileImage.appendChild(img);
@@ -188,7 +188,7 @@
                 deleteButton.textContent = "Delete";
                 deleteButton.className = "delete-button";
                 deleteButton.onclick = () => 
-                  deleteCashierItem(cashierItem.endDate, cashierItem.id, cashierItem.profileImageUrl);
+                  deleteCashier(cashierItem.id, cashierItem.profileImageURL);
                 divActionButton.appendChild(deleteButton);
 
                 row.appendChild(cashierId);
@@ -219,51 +219,52 @@
         fetchAndDisplayCashiers(filterElement.value);
       });
 
+      // async function deleteCashier(cashierKey, profileImageUrl) {
+      //       try {
+      //           // Remove cashier entry from the database
+      //           await remove(ref(database, 'cashiers/' + cashierKey));
 
-      async function deleteCashierItem(endDate, id, profileImageUrl) {
-      try {
-        const menuItemRef = database.ref(`cashiers/${endDate.toLowerCase()}/${id}`);
-        await menuItemRef.remove();
+      //           // Delete profile image from Firebase Storage
+      //           const storageReference = storageRef(storage, profileImageUrl);
+      //           await deleteObject(storageReference);
 
-        if (imageURL) {
-          const imageRef = storage.refFromURL(profileImageUrl);
-          await imageRef.delete();
-        }
-
-        alert('Cashier  deleted successfully');
-        fetchAndDisplayMenu(category);
-      } catch (error) {
-        alert('Error deleting menu item: ' + error);
-      }
-    }
-
-      // function deleteCashierItem(endDate, id, profileImageUrl) {
-      //   if (confirm("Are you sure you want to delete this data?")) {
-      //     const itemRef = ref(database, `cashiers/${endDate}/${id}`);
-      //     const imageRef = storageRef(storage, profileImageUrl);
-        
-      //     console.log("Deleting item from database:", itemRef);
-      //     console.log("Deleting image from storage:", imageRef);
-        
-      //     // Pisahkan operasi penghapusan untuk debug lebih lanjut
-      //     remove(itemRef)
-      //       .then(() => {
-      //         console.log("Item deleted from database");
-      //         showNotification("Item deleted successfully", "success");
-            
-      //         // Hapus gambar setelah data dihapus
-      //         return deleteObject(imageRef);
-      //       })
-      //       .then(() => {
-      //         console.log("Image deleted from storage");
-      //         showNotification("Image deleted successfully", "success");
-      //       })
-      //       .catch((error) => {
-      //         console.error("Error deleting item or image:", error);
-      //         showNotification("Error deleting item or image", "error");
-      //       });
+      //           alert('Cashier account deleted successfully');
+      //           renderCashierList(); // Refresh the cashier list
+      //       } catch (e) {
+      //           alert('Error deleting cashier account: ' + e);
+      //       }
       //   }
-      // }
+
+    function deleteCashier(id, profileImageURL) {
+      if (confirm("Are you sure you want to delete this data?")) {
+        const itemRef = ref(database, `cashiers/${id}`);
+        const imageRef = storageRef(storage, profileImageURL);
+      
+        console.log("Deleting item from database:", itemRef);
+        console.log("Deleting image from storage:", imageRef);
+      
+        // Pisahkan operasi penghapusan untuk debug lebih lanjut
+        remove(itemRef)
+          .then(() => {
+            console.log("Item deleted from database");
+            showNotification("Item deleted successfully", "success");
+          })
+          .catch((error) => {
+            console.error("Error deleting item from database:", error);
+            showNotification("Error deleting item", "error");
+          });
+        
+        deleteObject(imageRef)
+          .then(() => {
+            console.log("Image deleted from storage");
+            showNotification("Image deleted successfully", "success");
+          })
+          .catch((error) => {
+            console.error("Error deleting image from storage:", error);
+            showNotification("Error deleting image", "error");
+          });
+      }
+    }
 
       function editCashierItem(id, cashierItem) {
         // Redirect user to editCashier.html with item data to edit
