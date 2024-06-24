@@ -96,50 +96,55 @@
         });
 
         document.getElementById('editForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+    e.preventDefault();
 
-            const newEndDate = document.getElementById('endDate').value;
-            const newGender = document.getElementById('gender').value;
-            const newName = document.getElementById('name').value;
-            const newImageFile = document.getElementById('profileImage').files[0];
+    const newEndDate = document.getElementById('endDate').value;
+    const newGender = document.getElementById('gender').value;
+    const newName = document.getElementById('name').value;
+    const newImageFile = document.getElementById('profileImage').files[0];
 
-            if (cashierId) {
-                const cashierRef = ref(database, `cashiers/${cashierId}`);
+    // Mendapatkan cashierId dari URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const cashierId = urlParams.get('id');
 
-                // Update cashier data in Firebase Database
-                try {
-                    if (newImageFile) {
-                        const storageReference = storageRef(storage, `cashierImages/${newImageFile.name}`);
-                        const snapshot = await uploadBytes(storageReference, newImageFile);
-                        const newImageURL = await getDownloadURL(snapshot.ref);
+    if (cashierId) {
+        const cashierRef = ref(database, `cashiers/${cashierId}`);
 
-                        const updatedCashier = {
-                            endDate: newEndDate,
-                            gender: newGender,
-                            name: newName,
-                            profileImageURL: newImageURL
-                        };
+        // Update data kasir di Firebase Database
+        try {
+            if (newImageFile) {
+                const storageReference = storageRef(storage, `cashierImages/${newImageFile.name}`);
+                const snapshot = await uploadBytes(storageReference, newImageFile);
+                const newImageURL = await getDownloadURL(snapshot.ref);
 
-                        await update(cashierRef, updatedCashier);
-                    } else {
-                        const updatedCashier = {
-                            endDate: newEndDate,
-                            gender: newGender,
-                            name: newName
-                        };
+                const updatedCashier = {
+                    endDate: newEndDate,
+                    gender: newGender,
+                    name: newName,
+                    profileImageURL: newImageURL
+                };
 
-                        await update(cashierRef, updatedCashier);
-                    }
-
-                    console.log('Cashier updated successfully');
-                    window.location.href = 'cashiers.html';
-                } catch (error) {
-                    console.error('Error updating cashier:', error);
-                }
+                await update(cashierRef, updatedCashier);
             } else {
-                console.error("Missing cashier ID in URL parameters");
+                const updatedCashier = {
+                    endDate: newEndDate,
+                    gender: newGender,
+                    name: newName
+                };
+
+                await update(cashierRef, updatedCashier);
             }
-        });
+
+            console.log('Cashier updated successfully');
+            window.location.href = 'cashiers.html';
+        } catch (error) {
+            console.error('Error updating cashier:', error);
+        }
+    } else {
+        console.error("Missing cashier ID in URL parameters");
+    }
+});
+
     </script>
 </body>
 </html>
