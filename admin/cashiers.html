@@ -138,8 +138,8 @@
 
                         const profileImage = document.createElement("td");
                         const img = document.createElement("img");
-                        img.src = cashierItem.profileImage || "../Assets/default-profile.png";
-                        img.alt = "Profile Image";
+                        img.src = cashierItem.profileImageUrl;
+                        img.alt =  `${cashierItem.name} Photo`;
                         img.width = 50;
                         profileImage.appendChild(img);
 
@@ -217,15 +217,16 @@
 
         function editCashierItem(id, cashierItem) {
             // Redirect user to editCashier.html with item data to edit
-            const url = new URL(window.location.origin + '/admin/editCashiers.html');
-            url.searchParams.set('id', id);
-            url.searchParams.set('profileImage', cashierItem.profileImage);
-            url.searchParams.set('name', cashierItem.name);
-            url.searchParams.set('gender', cashierItem.gender);
-            url.searchParams.set('startDate', cashierItem.startDate);
-            url.searchParams.set('endDate', cashierItem.endDate);
+            window.location.href = `editCashiers.html?cashierID=${id}&name${cashierItem.name}&startDate${cashierItem.startDate}&endDate=${cashierItem.endDate}&gender${cashierItem.gender}&imageURL=${cashierItem.imageURL}`
+            // const url = new URL(window.location.origin + '/admin/editCashiers.html');
+            // url.searchParams.set('id', id);
+            // url.searchParams.set('profileImage', cashierItem.profileImage);
+            // url.searchParams.set('name', cashierItem.name);
+            // url.searchParams.set('gender', cashierItem.gender);
+            // url.searchParams.set('startDate', cashierItem.startDate);
+            // url.searchParams.set('endDate', cashierItem.endDate);
 
-            window.location.href = url.toString();
+            // window.location.href = url.toString();
         }
 
         function showNotification(message, type) {
