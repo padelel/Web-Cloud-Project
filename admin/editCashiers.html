@@ -73,7 +73,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const cashierId = urlParams.get('id');
+            const cashierId = urlParams.get('cashierID');
             const startDate = urlParams.get('startDate');
             const endDate = urlParams.get('endDate');
             const gender = urlParams.get('gender');
@@ -141,11 +141,11 @@
                 } else {
                     // Jika tidak ada file gambar baru dipilih, hanya update data tanpa gambar
                     const updatedItem = {
+                        gender: newGender,
+                        endDate: newEndDate,
+                        id: newId,
                         name: newName,
-                        price: newPrice,
-                        description: newDescription,
-                        category: newCategory,
-                        id: newId // ID baru yang sudah diubah atau digenerate
+                        startDate: newStartDate
                     };
 
                     const cashierRef = ref(database, `cashiers/${key}`);
@@ -155,7 +155,7 @@
                     console.log('Item updated successfully');
                     // Redirect kembali ke halaman menu.html setelah update
                     window.location.href = 'cashiers.html';
-                }
+                } 
             });
         });
     </script>
