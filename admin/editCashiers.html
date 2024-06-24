@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brew Bounty Admin - Edit Item</title>
+    <title>Brew Bounty Admin - Edit Cashier</title>
     <link rel="stylesheet" href="../Assets/css/homepagestyle.css">
 </head>
 <body>
     <nav>
         <ul class="sidebar">
             <li onclick="closeSidebar()" class="cross"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224-224 224Z"/></svg></a></li>
-            <li class="nav-text"><a href="menu.html">Exit</a></li>
+            <li class="nav-text"><a href="cashiers.html">Exit</a></li>
         </ul>
 
         <ul>
@@ -22,28 +22,27 @@
         </ul>
     </nav>
 
-    <h2 class="recipe-title">Edit Item</h2>
+    <h2 class="recipe-title">Edit Cashier</h2>
 
     <form id="editForm">
         <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate" name="startDate" readonly>
+        <input type="date" id="startDate" name="startDate" readonly><br><br>
 
         <label for="endDate">End Date:</label>
-            <input type="date" id="endDate" name="endDate" required>
+        <input type="date" id="endDate" name="endDate" required><br><br>
 
         <label for="gender">Gender:</label>
         <select id="gender" name="gender" required>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Other">Other</option>
-        </select>
+        </select><br><br>
 
         <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+        <input type="text" id="name" name="name" required><br><br>
 
         <label for="profileImage">Profile Image:</label>
-        <input type="file" id="profileImage" name="profileImage" accept="image/*">
-
+        <input type="file" id="profileImage" name="profileImage" accept="image/*"><br><br>
 
         <input type="submit" class="submitButton" value="Update Cashier">
     </form>
@@ -53,7 +52,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getDatabase, ref, update, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
         import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
         const firebaseConfig = {
@@ -71,91 +70,76 @@
         const database = getDatabase(app);
         const storage = getStorage(app);
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const cashierId = urlParams.get('cashierID');
-            const startDate = urlParams.get('startDate');
-            const endDate = urlParams.get('endDate');
-            const gender = urlParams.get('gender');
-            const name = urlParams.get('name');
-            const profileImageUrl = urlParams.get('ImageURL');
+            const cashierId = urlParams.get('id');
 
-            // Mengisi nilai form dengan data yang diterima dari URL
-            document.getElementById('startDate').value = startDate || '';
-            document.getElementById('endDate').value = endDate || '';
-            document.getElementById('gender').value = gender || '';
-            document.getElementById('name').value = name || '';
+            if (cashierId) {
+                const cashierRef = ref(database, `cashiers/${cashierId}`);
+                try {
+                    const snapshot = await get(cashierRef);
+                    if (snapshot.exists()) {
+                        const cashierData = snapshot.val();
+                        document.getElementById('startDate').value = cashierData.startDate || '';
+                        document.getElementById('endDate').value = cashierData.endDate || '';
+                        document.getElementById('gender').value = cashierData.gender || 'Male';
+                        document.getElementById('name').value = cashierData.name || '';
+                    } else {
+                        console.error("No data available for the specified cashier");
+                    }
+                } catch (error) {
+                    console.error("Error fetching cashier data:", error);
+                }
+            } else {
+                console.error("Missing cashier ID in URL parameters");
+            }
+        });
 
-            // Generate ID baru berdasarkan kategori jika tidak ada ID dari URL
-            let newItemId = cashierId || generateNewId(document.getElementById('gender').value);
+        document.getElementById('editForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-            document.getElementById('cashierID').value = newCashierId;
+            const newEndDate = document.getElementById('endDate').value;
+            const newGender = document.getElementById('gender').value;
+            const newName = document.getElementById('name').value;
+            const newImageFile = document.getElementById('profileImage').files[0];
 
-            // Update ID saat kategori berubah
-            document.getElementById('gender').addEventListener('change', (e) => {
-                const newCategory = e.target.value;
-                document.getElementById('cashierID').value = generateNewId(newCategory);
-            });
+            if (cashierId) {
+                const cashierRef = ref(database, `cashiers/${cashierId}`);
 
-            // Handler untuk form edit
-            document.getElementById('editForm').addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                const newStartDate = document.getElementById('startDate').value;
-                const newEndDate = document.getElementById('endDate').value;
-                const newGender = document.getElementById('gender').value;
-                const newId = document.getElementById('cashierID').value;
-                const newName = document.getElementById('name').value;
-                const newImageFile = document.getElementById('profileImage').files[0]; // Ambil file gambar yang dipilih
-
-                // Jika ada file gambar baru yang dipilih
-                if (newImageFile) {
-                    const storageReference = storageRef(storage, `images/${newImageFile.name}`);
-                    
-                    try {
-                        // Unggah file gambar baru ke Firebase Storage
+                // Update cashier data in Firebase Database
+                try {
+                    if (newImageFile) {
+                        const storageReference = storageRef(storage, `cashierImages/${newImageFile.name}`);
                         const snapshot = await uploadBytes(storageReference, newImageFile);
                         const newImageURL = await getDownloadURL(snapshot.ref);
 
-                        // Data yang akan diperbarui
-                        const updatedItem = {
-                            gender: newGender,
+                        const updatedCashier = {
                             endDate: newEndDate,
-                            id: newId,
+                            gender: newGender,
                             name: newName,
-                            imageURL: newImageURL, // URL gambar yang baru diunggah
-                            startDate: newStartDate
+                            profileImageURL: newImageURL
                         };
 
-                        const itemRef = ref(database, `cashiers/${key}`);
-                        // Update data di Firebase Realtime Database
-                        await update(itemRef, updatedItem);
+                        await update(cashierRef, updatedCashier);
+                    } else {
+                        const updatedCashier = {
+                            endDate: newEndDate,
+                            gender: newGender,
+                            name: newName
+                        };
 
-                        console.log('Item updated successfully');
-                        // Redirect kembali ke halaman menu.html setelah update
-                        window.location.href = 'cashiers.html';
-                    } catch (error) {
-                        console.error('Error updating item with new image:', error);
-                        // Menampilkan pesan error jika perlu
+                        await update(cashierRef, updatedCashier);
                     }
-                } else {
-                    // Jika tidak ada file gambar baru dipilih, hanya update data tanpa gambar
-                    const updatedItem = {
-                        gender: newGender,
-                        endDate: newEndDate,
-                        id: newId,
-                        name: newName,
-                        startDate: newStartDate
-                    };
 
-                    const cashierRef = ref(database, `cashiers/${key}`);
-                    // Update data di Firebase Realtime Database
-                    await update(cashierRef, updatedItem);
-
-                    console.log('Item updated successfully');
-                    // Redirect kembali ke halaman menu.html setelah update
+                    console.log('Cashier updated successfully');
                     window.location.href = 'cashiers.html';
-                } 
-            });
+                } catch (error) {
+                    console.error('Error updating cashier:', error);
+                }
+            } else {
+                console.error("Missing cashier ID in URL parameters");
+            }
         });
     </script>
+</body>
+</html>

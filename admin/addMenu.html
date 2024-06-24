@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Menu Item</title>
-    <link rel="stylesheet" href="Assets/css/homepagestyle.css">
+    <link rel="stylesheet" href="../Assets/css/homepagestyle.css">
 </head>
 <body>
     <nav>
         <ul class="sidebar">
             <li onclick="closeSidebar()" class="cross"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></a></li>
-            <li class="nav-text"><a href="admin/menu.html">Exit</a></li>
+            <li class="nav-text"><a href="menu.html">Exit</a></li>
         </ul>
 
         <ul>
             <li class="nav-brand"><a href="HomePage.html"><img class="logo" height="50" src="assets/coffee-beans.png">Brew Bounty</a></li>
             <div class="navbar">
-                <li class="hideonmobile"><a href="admin/menu.html">Exit</a></li>
+                <li class="hideonmobile"><a href="menu.html">Exit</a></li>
             </div>
         </ul>
     </nav>
@@ -105,7 +105,7 @@
                 await set(ref(database, `menu/${category.toLowerCase()}/${newMenuItemKey}`), newMenuItemData);
                 alert('Menu item added successfully');
                 document.getElementById('createMenuForm').reset();
-                window.location.href = 'admin/menu.html'; // Redirect to menu.html after adding item
+                window.location.href = 'menu.html'; // Redirect to menu.html after adding item
             } catch (error) {
                 console.error('Error adding menu item:', error);
                 alert('Error adding menu item: ' + error.message);
