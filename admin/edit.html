@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brew Bounty Admin</title>
+    <title>Brew Bounty Admin - Edit Item</title>
     <link rel="stylesheet" href="../Assets/css/homepagestyle.css">
 </head>
 <body>
     <nav>
         <ul class="sidebar">
-            <li onclick="closeSidebar()" class="cross"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></a></li>
+            <li onclick="closeSidebar()" class="cross"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224-224 224Z"/></svg></a></li>
             <li class="nav-text"><a href="menu.html">Exit</a></li>
         </ul>
 
@@ -34,6 +34,15 @@
         <label for="itemDescription">Description:</label><br>
         <textarea id="itemDescription" name="itemDescription" required></textarea><br><br>
 
+        <label for="itemCategory">Category:</label>
+        <select id="itemCategory" name="itemCategory" required>
+            <option value="appetizer">Appetizer</option>
+            <option value="mainCourse">Main Course</option>
+        </select><br><br>
+
+        <label for="itemId">ID:</label>
+        <input type="text" id="itemId" name="itemId" required readonly><br><br>
+
         <label for="itemImage">Choose Image:</label>
         <input type="file" id="itemImage" name="itemImage" accept="image/*"><br><br>
 
@@ -44,94 +53,120 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
     <script type="module">
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-            import { getDatabase, ref, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-            import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, update, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyDzURQckDxjVYzWHcRSfq0VTBjqwQYhUg0",
-        authDomain: "brew-bounty-admin.firebaseapp.com",
-        projectId: "brew-bounty-admin",
-        storageBucket: "brew-bounty-admin.appspot.com",
-        messagingSenderId: "108525876940",
-        appId: "1:108525876940:web:e8eff02f81f9425d65f469",
-        measurementId: "G-124F208GM2",
-        databaseURL: "https://brew-bounty-admin-default-rtdb.asia-southeast1.firebasedatabase.app",
-    };
+        const firebaseConfig = {
+            apiKey: "AIzaSyDzURQckDxjVYzWHcRSfq0VTBjqwQYhUg0",
+            authDomain: "brew-bounty-admin.firebaseapp.com",
+            projectId: "brew-bounty-admin",
+            storageBucket: "brew-bounty-admin.appspot.com",
+            messagingSenderId: "108525876940",
+            appId: "1:108525876940:web:e8eff02f81f9425d65f469",
+            measurementId: "G-124F208GM2",
+            databaseURL: "https://brew-bounty-admin-default-rtdb.asia-southeast1.firebasedatabase.app"
+        };
 
-    const app = initializeApp(firebaseConfig);
-    const database = getDatabase(app);
-    const storage = getStorage(app);
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const storage = getStorage(app);
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const key = urlParams.get('key');
-        const name = urlParams.get('name');
-        const price = urlParams.get('price');
-        const description = urlParams.get('description');
-        const imageURL = urlParams.get('imageURL');
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const key = urlParams.get('key');
+            const name = urlParams.get('name');
+            const price = urlParams.get('price');
+            const description = urlParams.get('description');
+            const category = urlParams.get('category');
+            const id = urlParams.get('id');
+            const imageURL = urlParams.get('imageURL');
 
-        // Mengisi nilai form dengan data yang diterima dari URL
-        document.getElementById('itemName').value = name;
-        document.getElementById('itemPrice').value = price;
-        document.getElementById('itemDescription').value = description;
+            // Mengisi nilai form dengan data yang diterima dari URL
+            document.getElementById('itemName').value = name || '';
+            document.getElementById('itemPrice').value = price || '';
+            document.getElementById('itemDescription').value = description || '';
+            document.getElementById('itemCategory').value = category || '';
 
-        // Handler untuk form edit
-        document.getElementById('editForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
+            // Generate ID baru berdasarkan kategori jika tidak ada ID dari URL
+            let newItemId = id || generateNewId(document.getElementById('itemCategory').value);
 
-        const newName = document.getElementById('itemName').value;
-        const newPrice = document.getElementById('itemPrice').value;
-        const newDescription = document.getElementById('itemDescription').value;
-        const newImageFile = document.getElementById('itemImage').files[0]; // Ambil file gambar yang dipilih
+            document.getElementById('itemId').value = newItemId;
 
-        // Jika ada file gambar baru yang dipilih
-        if (newImageFile) {
-            const storageReference = storageRef(storage, `images/${newImageFile.name}`);
-            
-            try {
-                // Unggah file gambar baru ke Firebase Storage
-                const snapshot = await uploadBytes(storageReference, newImageFile);
-                const newImageURL = await getDownloadURL(snapshot.ref);
+            // Update ID saat kategori berubah
+            document.getElementById('itemCategory').addEventListener('change', (e) => {
+                const newCategory = e.target.value;
+                document.getElementById('itemId').value = generateNewId(newCategory);
+            });
 
-                // Data yang akan diperbarui
-                const updatedItem = {
-                    name: newName,
-                    price: newPrice,
-                    description: newDescription,
-                    imageURL: newImageURL // URL gambar yang baru diunggah
-                };
+            // Handler untuk form edit
+            document.getElementById('editForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
 
-                const itemRef = ref(database, `menu/${key}`);
-                // Update data di Firebase Realtime Database
-                await update(itemRef, updatedItem);
+                const newName = document.getElementById('itemName').value;
+                const newPrice = document.getElementById('itemPrice').value;
+                const newDescription = document.getElementById('itemDescription').value;
+                const newCategory = document.getElementById('itemCategory').value;
+                const newId = document.getElementById('itemId').value;
+                const newImageFile = document.getElementById('itemImage').files[0]; // Ambil file gambar yang dipilih
 
-                console.log('Item updated successfully');
-                // Redirect kembali ke halaman menu.html setelah update
-                window.location.href = 'menu.html';
-            } catch (error) {
-                console.error('Error updating item with new image:', error);
-                // Menampilkan pesan error jika perlu
-            }
-        } else {
-            // Jika tidak ada file gambar baru dipilih, hanya update data tanpa gambar
-            const updatedItem = {
-                name: newName,
-                price: newPrice,
-                description: newDescription
-            };
+                // Jika ada file gambar baru yang dipilih
+                if (newImageFile) {
+                    const storageReference = storageRef(storage, `images/${newImageFile.name}`);
+                    
+                    try {
+                        // Unggah file gambar baru ke Firebase Storage
+                        const snapshot = await uploadBytes(storageReference, newImageFile);
+                        const newImageURL = await getDownloadURL(snapshot.ref);
 
-            const itemRef = ref(database, `menu/${key}`);
-            // Update data di Firebase Realtime Database
-            await update(itemRef, updatedItem);
+                        // Data yang akan diperbarui
+                        const updatedItem = {
+                            name: newName,
+                            price: newPrice,
+                            description: newDescription,
+                            category: newCategory,
+                            id: newId,
+                            imageURL: newImageURL // URL gambar yang baru diunggah
+                        };
 
-            console.log('Item updated successfully');
-            // Redirect kembali ke halaman menu.html setelah update
-            window.location.href = 'menu.html';
+                        const itemRef = ref(database, `menu/${key}`);
+                        // Update data di Firebase Realtime Database
+                        await update(itemRef, updatedItem);
+
+                        console.log('Item updated successfully');
+                        // Redirect kembali ke halaman menu.html setelah update
+                        window.location.href = 'menu.html';
+                    } catch (error) {
+                        console.error('Error updating item with new image:', error);
+                        // Menampilkan pesan error jika perlu
+                    }
+                } else {
+                    // Jika tidak ada file gambar baru dipilih, hanya update data tanpa gambar
+                    const updatedItem = {
+                        name: newName,
+                        price: newPrice,
+                        description: newDescription,
+                        category: newCategory,
+                        id: newId // ID baru yang sudah diubah atau digenerate
+                    };
+
+                    const itemRef = ref(database, `menu/${key}`);
+                    // Update data di Firebase Realtime Database
+                    await update(itemRef, updatedItem);
+
+                    console.log('Item updated successfully');
+                    // Redirect kembali ke halaman menu.html setelah update
+                    window.location.href = 'menu.html';
+                }
+            });
+        });
+
+        // Fungsi untuk generate ID baru berdasarkan kategori
+        function generateNewId(category) {
+            const prefix = category === 'appetizer' ? 'AP' : 'MC';
+            const randomId = Math.floor(1000 + Math.random() * 9000); // Generate angka acak antara 1000 dan 9999
+            return `${prefix}-${randomId}`;
         }
-    });
-});
-
     </script>
 </body>
 </html>
