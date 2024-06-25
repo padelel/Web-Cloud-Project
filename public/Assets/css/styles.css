@@ -192,11 +192,11 @@ select:focus {
     width: 150px;
 }
 
-.active {
+/* .active {
     display: flex;
     flex-direction: column;
     gap: 8px;
-}
+} */
 
 .custom-dropdown .option {
     padding: 8px 12px;

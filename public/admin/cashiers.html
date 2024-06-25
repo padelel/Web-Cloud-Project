@@ -29,9 +29,9 @@
         <a href="menu.html">
           <li><i class="ri-restaurant-2-line"></i>Menu</li>
         </a>
-        <a href="cashiers.html">
-          <li><i class="ri-admin-line"></i>Cashiers</li>
-        </a>
+        <li id="cashier">
+          <i class="ri-admin-line"></i><a href="cashiers.html"></a>Cashiers
+        </li>
       </ul>
     </section>
 
@@ -46,7 +46,7 @@
       <div class="table">
         <div class="table-option">
           <label for="sort" id="sort-label"
-            ><i class="ri-filter-3-line"></i>Filter</label
+            ><i class="ri-filter-3-line"></i>Sort</label
           >
           <select name="sort" id="sort">
             <option value="ascending">Ascending</option>
@@ -74,7 +74,7 @@
             <tbody id="table-body"></tbody>
           </table>
 
-          <form class="pagination">
+          <!-- <form class="pagination">
             <label for="dataperpage">Lines per Page</label>
             <select name="dataperpage" id="dataperpage">
               <option value="5">5</option>
@@ -91,7 +91,7 @@
                 ><i class="ri-arrow-right-s-line"></i
               ></a>
             </div>
-          </form>
+          </form> -->
         </div>
       </div>
     </section>
@@ -103,19 +103,29 @@
     <script type="module">
       // Import Firebase libraries
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-      import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-      import { getStorage, ref as storageRef, deleteObject } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+      import {
+        getDatabase,
+        ref,
+        onValue,
+        remove,
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+      import {
+        getStorage,
+        ref as storageRef,
+        deleteObject,
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
       // Your web app's Firebase configuration
       const firebaseConfig = {
         apiKey: "AIzaSyDzURQckDxjVYzWHcRSfq0VTBjqwQYhUg0",
         authDomain: "brew-bounty-admin.firebaseapp.com",
-        databaseURL: "https://brew-bounty-admin-default-rtdb.asia-southeast1.firebasedatabase.app",
+        databaseURL:
+          "https://brew-bounty-admin-default-rtdb.asia-southeast1.firebasedatabase.app",
         projectId: "brew-bounty-admin",
         storageBucket: "brew-bounty-admin.appspot.com",
         messagingSenderId: "108525876940",
         appId: "1:108525876940:web:e8eff02f81f9425d65f469",
-        measurementId: "G-124F208GM2"
+        measurementId: "G-124F208GM2",
       };
 
       const app = initializeApp(firebaseConfig);
@@ -234,34 +244,45 @@
               showNotification("Error deleting item", "error");
             });
 
-            deleteObject(imageRef)
-              .then(() => {
-                console.log("Image deleted from storage");
-                showNotification("Image deleted successfully", "success");
-              })
-              .catch((error) => {
-                console.error("Error deleting image from storage:", error);
-                showNotification("Error deleting image", "error");
-              });
-            }
-            }
+          deleteObject(imageRef)
+            .then(() => {
+              console.log("Image deleted from storage");
+              showNotification("Image deleted successfully", "success");
+            })
+            .catch((error) => {
+              console.error("Error deleting image from storage:", error);
+              showNotification("Error deleting image", "error");
+            });
+        }
+      }
 
-            function editCashierItem(id, cashierItem) {
-            window.location.href = `editCashiers.html?id=${id}`;
-            }
+      function editCashierItem(id, cashierItem) {
+        window.location.href = `editCashiers.html?id=${id}`;
+      }
 
-            function showNotification(message, type) {
-            const notification = document.getElementById("notification");
-            notification.textContent = message;
-            notification.classList.remove("hidden", "success", "error");
-            notification.classList.add("visible", type);
+      function showNotification(message, type) {
+        const notification = document.getElementById("notification");
+        notification.textContent = message;
+        notification.classList.remove("hidden", "success", "error");
+        notification.classList.add("visible", type);
+        setTimeout(() => {
+          notification.classList.remove("visible");
+          notification.classList.add("hidden");
+        }, 3000);
+      }
+      function setActiveMenu(type) {
+        if (type === "cashier") {
+          document.getElementById("cashier").classList.add("active");
+        } else {
+          document.getElementById("cashier").classList.remove("active");
+        }
+      }
 
-            setTimeout(() => {
-            notification.classList.remove("visible");
-            notification.classList.add("hidden");
-            }, 3000);
-            }
-</script>
-
-</body>
+      document.querySelector("#cashier").addEventListener("click", (e) => {
+        e.preventDefault();
+        setActiveMenu("cashier");
+        fetchAndDisplayCashiers("");
+      });
+    </script>
+  </body>
 </html>

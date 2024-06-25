@@ -38,7 +38,7 @@
 
     <div class="table">
       <div class="table-option">
-        <label for="sort" id="sort-label"><i class="ri-filter-3-line"></i>Filter</label>
+        <label for="sort" id="sort-label"><i class="ri-filter-3-line"></i>Sort</label>
         <select name="sort" id="sort">
           <option value="ascending">Ascending</option>
           <option value="descending">Descending</option>
@@ -65,7 +65,7 @@
           <tbody id="table-body"></tbody>
         </table>
 
-        <form class="pagination">
+        <!-- <form class="pagination">
           <label for="dataperpage">Lines per Page</label>
           <select name="dataperpage" id="dataperpage">
             <option value="5">5</option>
@@ -78,7 +78,7 @@
             <a href=""><i class="ri-arrow-left-s-line"></i></a>
             <a href=""><i class="ri-arrow-right-s-line"></i></a>
           </div>
-        </form>
+        </form> -->
       </div>
     </div>
   </section>
@@ -218,6 +218,8 @@
           document.querySelector('.food-menu').classList.add('active');
         } else if (type === 'drink') {
           document.querySelector('.drinks-menu').classList.add('active');
+        } else if (type === 'cashier') {
+          document.getElementById('cashier').classList.add('active');
         } else {
           document.getElementById('menu').classList.add('display');
         }
@@ -239,6 +241,12 @@
         e.preventDefault();
         setActiveMenu('');
         fetchAndDisplayMenu("", filterElement.value);
+      });
+
+      document.querySelector("#cashier").addEventListener("click", (e) => {
+        e.preventDefault();
+        setActiveMenu("cashier");
+        fetchAndDisplayCashiers("");
       });
   
       filterElement.addEventListener('change', (e) => {
