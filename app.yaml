@@ -2,8 +2,8 @@ runtime: nodejs18
 
 handlers:
 - url: /
-  static_files: public/admin/index.html
-  upload: public/admin/index.html
+  static_files: public/HomePage.html
+  upload: public/HomePage.html
 
 - url: /(.*)
   static_files: public/\1
