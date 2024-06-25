@@ -1,3 +1,10 @@
-runtime: nodejs20
-env: standard
-instance_class: F1
+runtime: nodejs18
+
+handlers:
+- url: /
+  static_files: public/admin/index.html
+  upload: public/admin/index.html
+
+- url: /(.*)
+  static_files: public/\1
+  upload: public/(.*)
