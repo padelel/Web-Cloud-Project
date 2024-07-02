@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../Assets/css/login.css">
 </head>
 <body>
+    <div id="error-message"></div>
     <div class="login-container">
         <h2>Admin Login</h2>
         <form id="loginForm">
@@ -18,12 +19,13 @@
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit">Login</button>
+            <div class="button-section">
+                <button type="submit">Login</button>
+                <!-- Menggunakan anchor tag yang terlihat seperti tombol -->
+                <a href="../HomePage.html" class="quit-button">Quit</a>
+            </div>
         </form>
-        <div id="error-message"></div>
 
-        <!-- Menggunakan anchor tag yang terlihat seperti tombol -->
-        <a href="../HomePage.html" class="quit-button">Quit</a>
     </div>
 
     <script type="module">
@@ -67,7 +69,13 @@
                 })
                 .catch((error) => {
                     // Handle login errors
-                    errorMessage.textContent = error.message;
+                    if(error.code === 'auth/wrong-password') {
+                        errorMessage.textContent = 'Password salah. Silahkan input lagi.';
+                    } else if (error.code === 'auth/user-not-found') {
+                        errorMessage.textContent = 'Email tidak ditemukan/terdaftar. Silahkan cek dan input akun yang terdaftar';
+                    } else {
+                        errorMessage.textContent = errorMessage;
+                    }
                 });
         });
     </script>
