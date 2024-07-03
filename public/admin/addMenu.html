@@ -43,7 +43,7 @@
         </div>
         <div>
             <label for="createPrice">Price:</label>
-            <input type="number" id="createPrice" name="price" required>
+            <input type="number" id="createPrice" name="price" min="0" required>
         </div>
         <div>
             <label for="createImage">Image:</label>
@@ -110,6 +110,16 @@
             } catch (error) {
                 console.error('Error adding menu item:', error);
                 alert('Error adding menu item: ' + error.message);
+            }
+        });
+
+        document.getElementById('createPrice').addEventListener('input', (e) => {
+            const priceInput = e.target;
+            const value = priceInput.value;
+
+            if (value < 0) {
+                priceInput.value = Math.abs(value);
+                alert('Price cannot be negative.');
             }
         });
 
