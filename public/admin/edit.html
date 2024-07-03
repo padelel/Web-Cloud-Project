@@ -29,7 +29,7 @@
         <input type="text" id="itemName" name="itemName" required><br><br>
 
         <label for="itemPrice">Price:</label>
-        <input type="text" id="itemPrice" name="itemPrice" required><br><br>
+        <input type="text" id="itemPrice" name="itemPrice" min="0" required><br><br>
 
         <label for="itemDescription">Description:</label><br>
         <textarea id="itemDescription" name="itemDescription" required></textarea><br><br>
@@ -134,6 +134,16 @@
                     console.error("Error updating item:", error);
                 }
             });
+        });
+
+                document.getElementById("itemPrice").addEventListener("input", (e) => {
+            const priceInput = e.target;
+            const value = priceInput.value;
+
+            if (value < 0) {
+                priceInput.value = Math.abs(value);
+                alert('Price cannot be negative.');
+            }
         });
     </script>
 </body>
