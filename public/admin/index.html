@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <link rel="stylesheet" href="../Assets/css/login.css">
+    <style>
+        #error-message {
+            color: red;
+            margin-bottom: 10px;
+            display: none; /* Initially hidden */
+        }
+    </style>
 </head>
 <body>
-    <div id="error-message"></div>
     <div class="login-container">
         <h2>Admin Login</h2>
+        <div id="error-message"></div> <!-- Error message div -->
         <form id="loginForm">
             <div>
                 <label for="email">Email:</label>
@@ -21,20 +28,17 @@
             </div>
             <div class="button-section">
                 <button type="submit">Login</button>
-                <!-- Menggunakan anchor tag yang terlihat seperti tombol -->
                 <a href="../HomePage.html" class="quit-button">Quit</a>
             </div>
         </form>
-
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
     <script type="module">
-        // Import the Firebase modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
 
-        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDzURQckDxjVYzWHcRSfq0VTBjqwQYhUg0",
             authDomain: "brew-bounty-admin.firebaseapp.com",
@@ -48,34 +52,48 @@
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-
-        // Initialize Firebase Authentication
         const auth = getAuth(app);
 
-        // Handle login form submission
         document.getElementById('loginForm').addEventListener('submit', function (e) {
             e.preventDefault();
 
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const errorMessage = document.getElementById('error-message');
+            const errorMessageElement = document.getElementById('error-message');
 
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    // Login successful
-                    errorMessage.textContent = '';
-                    window.location.href = '../admin/menu.html'; // Redirect to welcome page
+                    // Signed in
+                    const user = userCredential.user;
+                    // Redirect or handle success
+                    window.location.href = '../admin/menu.html';
                 })
                 .catch((error) => {
-                    // Handle login errors
-                    if(error.code === 'auth/wrong-password') {
-                        errorMessage.textContent = 'Password salah. Silahkan input lagi.';
-                    } else if (error.code === 'auth/user-not-found') {
-                        errorMessage.textContent = 'Email tidak ditemukan/terdaftar. Silahkan cek dan input akun yang terdaftar';
-                    } else {
-                        errorMessage.textContent = errorMessage;
+                    const errorCode = error.code;
+                    let errorMessage = error.message;
+
+                    // Customize error messages based on error code
+                    switch (errorCode) {
+                        case 'auth/invalid-email':
+                            errorMessage = 'Email address is not valid.';
+                            break;
+                        case 'auth/user-disabled':
+                            errorMessage = 'This user account has been disabled.';
+                            break;
+                        case 'auth/user-not-found':
+                            errorMessage = 'No user found with this email.';
+                            break;
+                        case 'auth/wrong-password':
+                            errorMessage = 'Incorrect password.';
+                            break;
+                        default:
+                            // Handling for other error codes including 400 Bad Request
+                            errorMessage = 'Login failed. Please check your email and password.';
                     }
+
+                    // Display error message
+                    errorMessageElement.textContent = errorMessage;
+                    errorMessageElement.style.display = 'block'; // Show the error message element
                 });
         });
     </script>
