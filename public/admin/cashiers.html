@@ -72,6 +72,7 @@
                 <th>Gender</th>
                 <th>Start Date</th>
                 <th>End Date</th>
+                <th>Password</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -185,6 +186,9 @@
                 const endDate = document.createElement("td");
                 endDate.textContent = cashierItem.endDate;
 
+                const password = document.createElement("td");
+                password.textContent = cashierItem.password;
+
                 const actionTd = document.createElement("td");
 
                 const divActionButton = document.createElement("div");
@@ -211,6 +215,7 @@
                 row.appendChild(gender);
                 row.appendChild(startDate);
                 row.appendChild(endDate);
+                row.appendChild(password);
                 row.appendChild(actionTd);
 
                 tableBody.appendChild(row);
