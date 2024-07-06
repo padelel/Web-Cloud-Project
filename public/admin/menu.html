@@ -60,6 +60,7 @@
               <th>Menu ID</th>
               <th>Price</th>
               <th>Description</th>
+              <th>Stock</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -172,6 +173,9 @@
   
             const menuDescription = document.createElement("td");
             menuDescription.textContent = menuItem.description;
+
+            const menuStock = document.createElement("td");
+            menuStock.textContent = menuItem.stock;
   
             const actionTd = document.createElement("td");
   
@@ -198,6 +202,7 @@
             row.appendChild(menuId);
             row.appendChild(menuPrice);
             row.appendChild(menuDescription);
+            row.appendChild(menuStock);
             row.appendChild(actionTd);
   
             tableBody.appendChild(row);

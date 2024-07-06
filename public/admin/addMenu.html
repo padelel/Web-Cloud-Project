@@ -46,6 +46,10 @@
             <input type="number" id="createPrice" name="price" min="0" required>
         </div>
         <div>
+            <label for="createStock">Stock:</label>
+            <input type="number" id="createStock" name="createStock" required>
+        </div>
+        <div>
             <label for="createImage">Image:</label>
             <input type="file" id="createImage" name="image" accept="image/*" required>
         </div>
@@ -84,7 +88,13 @@
             const name = document.getElementById('createName').value;
             const description = document.getElementById('createDescription').value;
             const price = document.getElementById('createPrice').value;
+            const stock = document.getElementById('createStock').value;
             const imageFile = document.getElementById('createImage').files[0];
+
+            if(stock <= 0 && price <= 0) {
+                alert('Stock cannot be negative or zero.');
+                return;
+            }
 
             try {
                 const storageReference = storageRef(storage, `images/${imageFile.name}`);
@@ -100,6 +110,7 @@
                     name,
                     description,
                     price,
+                    stock,
                     imageURL: imageUrl
                 };
 
@@ -117,9 +128,19 @@
             const priceInput = e.target;
             const value = priceInput.value;
 
-            if (value < 0) {
-                priceInput.value = Math.abs(value);
-                alert('Price cannot be negative.');
+            if (value <= 0) {
+                priceInput.value = 1;
+                alert('Price cannot be negative or zero.');
+            }
+        });
+        
+        document.getElementById('createStock').addEventListener('input', (e) => {
+            const stockInput = e.target;
+            const value = stockInput.value;
+
+            if (value <= 0) {
+                stockInput.value = 1;
+                alert('Stock cannot be negative or zero.');
             }
         });
 

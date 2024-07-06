@@ -29,7 +29,10 @@
         <input type="text" id="itemName" name="itemName" required><br><br>
 
         <label for="itemPrice">Price:</label>
-        <input type="text" id="itemPrice" name="itemPrice" min="0" required><br><br>
+        <input type="number" id="itemPrice" name="itemPrice" min="0" required><br><br>
+        
+        <label for="itemStock">Stock:</label>
+        <input type="number" id="itemStock" name="itemStock" min="0" required><br><br>
 
         <label for="itemDescription">Description:</label><br>
         <textarea id="itemDescription" name="itemDescription" required></textarea><br><br>
@@ -85,6 +88,7 @@
                         const itemData = snapshot.val();
                         document.getElementById("itemName").value = itemData.name;
                         document.getElementById("itemPrice").value = itemData.price;
+                        document.getElementById("itemStock").value = itemData.stock;
                         document.getElementById("itemDescription").value = itemData.description;
                         document.getElementById("itemCategory").value = category;
                         document.getElementById("itemId").value = id;
@@ -98,10 +102,16 @@
                 console.error("Missing category or id in URL parameters");
             }
 
+            if (itemPrice <= 0 && itemStock <= 0 ) {
+                    alert('Price atau Stock tidak boleh nol atau negatif');
+                    return;
+                }
+
             document.getElementById("editForm").addEventListener("submit", async (e) => {
                 e.preventDefault();
                 const itemName = document.getElementById("itemName").value;
                 const itemPrice = document.getElementById("itemPrice").value;
+                const itemStock = document.getElementById("itemStock").value;
                 const itemDescription = document.getElementById("itemDescription").value;
                 const itemCategory = document.getElementById("itemCategory").value;
                 const itemId = document.getElementById("itemId").value;
@@ -110,6 +120,7 @@
                 let updates = {
                     name: itemName,
                     price: itemPrice,
+                    stock: itemStock,
                     description: itemDescription,
                     category: itemCategory
                 };
@@ -137,14 +148,24 @@
         });
 
                 document.getElementById("itemPrice").addEventListener("input", (e) => {
-            const priceInput = e.target;
-            const value = priceInput.value;
+                    const priceInput = e.target;
+                    const value = priceInput.value;
 
-            if (value < 0) {
-                priceInput.value = Math.abs(value);
-                alert('Price cannot be negative.');
-            }
-        });
+                    if (value < 0) {
+                        priceInput.value = 1;
+                        alert('Price cannot be negative or zero.');
+                    }
+                });
+
+                document.getElementById("itemStock").addEventListener("input", (e) => {
+                    const stockInput = e.target;
+                    const value = stockInput.value;
+
+                    if (value < 0) {
+                        stockInput.value = 1;
+                        alert('Price cannot be negative or zero.');
+                    }
+                });
     </script>
 </body>
 </html>
