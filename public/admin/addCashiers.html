@@ -49,6 +49,10 @@
             <label for="profileImage">Profile Image:</label>
             <input type="file" id="profileImage" name="profileImage" accept="image/*" required>
         </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
         <div class="buttons">
             <button type="submit">Add Cashier</button>
         </div>
@@ -93,8 +97,8 @@
           const gender = document.getElementById('gender').value;
           const name = document.getElementById('name').value;
           const profileImageFile = document.getElementById('profileImage').files[0];
+          const password = document.getElementById('password').value; // Get the password input value
         
-          
           try {
             // Upload the profile image to Firebase Storage
             const storagePath = 'cashiers/' + profileImageFile.name; // Construct path for cashiers
@@ -113,6 +117,7 @@
               gender,
               name,
               profileImageURL, // Save the profile image URL
+              password, // Save the password
               timeStamp
             };
 
