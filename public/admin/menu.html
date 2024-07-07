@@ -22,9 +22,9 @@
     <ul class="sidebar-content">
       <a href=""><li><i class="ri-home-2-line"></i>Home</li></a>
       <li id="menu"><i class="ri-restaurant-2-line"></i>Menu</li>
-      <a href="" class="menu-dropdown food-menu"><li><i class="ri-bowl-fill"></i>Foods</li></a>
-      <a href="" class="menu-dropdown drinks-menu"><li><i class="ri-cup-line"></i>Drinks</li></a>
-      <a href="cashiers.html"><li><i class="ri-admin-line"></i>Cashiers</li></a>
+        <a href="" class="menu-dropdown food-menu"><li><i class="ri-bowl-fill"></i>Foods</li></a>
+        <a href="" class="menu-dropdown drinks-menu"><li><i class="ri-cup-line"></i>Drinks</li></a>
+      <a href="cashiers.html"><li id="cashier"><i class="ri-admin-line"></i>Cashiers</li></a>
       <a href="#" id="logout-button"><li><i class="ri-logout-box-r-line"></i>Logout</li></a>
     </ul>
   </section>
@@ -39,14 +39,16 @@
 
     <div class="table">
       <div class="table-option">
-        <label for="sort" id="sort-label"><i class="ri-filter-3-line"></i>Sort</label>
-        <select name="sort" id="sort">
-          <option value="ascending">Ascending</option>
-          <option value="descending">Descending</option>
-        </select>
-        <div id="custom-dropdown" class="custom-dropdown">
-          <div class="option" data-value="ascending">Ascending</div>
-          <div class="option" data-value="descending">Descending</div>
+        <div class="sort-container">
+          <label for="sort" id="sort-label"><i class="ri-filter-3-line"></i>Sort</label>
+          <select name="sort" id="sort">
+            <option value="ascending">Ascending</option>
+            <option value="descending">Descending</option>
+          </select>
+        </div>
+        <div id="searchBar" class="searchBar">
+          <i class="ri-search-2-line"></i>
+          <textarea name="search" id="search" placeholder="Search your menu"></textarea>  
         </div>
       </div>
 
@@ -109,7 +111,7 @@
     const database = getDatabase(app);
     const storage = getStorage(app);
   
-    function fetchAndDisplayMenu(category, sortOrder) {
+    async function fetchAndDisplayMenu(category, sortOrder, searchTerm = "") {
       let menuRef;
       if (category === "food" || category === "drink") {
         menuRef = ref(database, `menu/${category}`);
@@ -138,11 +140,17 @@
               });
             });
           }
-  
+
+          // Kondisi jika salah satu opsi sort dipilih
           if (sortOrder === "ascending") {
             menuItems.sort((a, b) => a.name.localeCompare(b.name));
           } else if (sortOrder === "descending") {
             menuItems.sort((a, b) => b.name.localeCompare(a.name));
+          }
+
+          // Kondisi jika search dimasukkan
+          if (searchTerm) {
+            menuItems = menuItems.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
           }
   
           menuItems.forEach((menuItem) => {
@@ -215,6 +223,7 @@
   
     document.addEventListener("DOMContentLoaded", () => {
       const filterElement = document.getElementById('sort');
+      const searchElement = document.getElementById('search');
   
       function setActiveMenu(type) {
         document.querySelectorAll('.menu-dropdown').forEach(item => {
@@ -258,10 +267,16 @@
       filterElement.addEventListener('change', (e) => {
         const activeMenu = document.querySelector('.menu-dropdown.active');
         const activeMenuType = activeMenu ? (activeMenu.classList.contains('food-menu') ? 'food' : 'drink') : '';
-        fetchAndDisplayMenu(activeMenuType, e.target.value);
+        fetchAndDisplayMenu(activeMenuType, e.target.value, searchElement.value);
       });
-  
-      fetchAndDisplayMenu("", filterElement.value);
+
+      searchElement.addEventListener('input', (e) => {
+        const activeMenu = document.querySelector('.menu-dropdown.active');
+        const activeMenuType = activeMenu ? (activeMenu.classList.contains('food-menu') ? 'food' : 'drink') : '';
+        fetchAndDisplayMenu(activeMenuType, filterElement.value, e.target.value);
+      });
+
+      fetchAndDisplayMenu("", filterElement.value, searchElement.value);
     });
 
     document.addEventListener("DOMContentLoaded", () => {

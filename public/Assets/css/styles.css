@@ -169,8 +169,41 @@ select:focus {
 }
 
 .table-option {
+    display: flex;
+    justify-content: space-between;
     position: relative;
-    display: inline-block;
+}
+
+.sort-container {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.searchBar {
+    margin-right: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#search {
+    font-family: poppins;
+    border: none;
+    display: flex;
+    text-align: left;
+    border-radius: 8px;
+    height: 28px;
+    box-sizing: border-box;
+    resize: none; /* Menonaktifkan resizing untuk memastikan teks tetap di tengah */
+}
+
+#search::placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
 }
 
 #filter-label {
@@ -178,36 +211,6 @@ select:focus {
     display: flex;
     align-items: center;
     gap: 8px;
-}
-
-.custom-dropdown {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(83, 54, 20, 0.5);
-    z-index: 1000;
-    width: 150px;
-}
-
-/* .active {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-} */
-
-.custom-dropdown .option {
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all .3s ease;
-}
-
-.custom-dropdown .option:hover {
-    background-color: #7a5e46;
-    color: #f0f0f0;
 }
 
 .table-content table {
