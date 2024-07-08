@@ -257,12 +257,6 @@
         setActiveMenu('');
         fetchAndDisplayMenu("", filterElement.value);
       });
-
-      document.querySelector("#cashier").addEventListener("click", (e) => {
-        e.preventDefault();
-        setActiveMenu("cashier");
-        fetchAndDisplayCashiers("");
-      });
   
       filterElement.addEventListener('change', (e) => {
         const activeMenu = document.querySelector('.menu-dropdown.active');
@@ -317,8 +311,7 @@
             console.error("Error deleting image from storage:", error);
             showNotification("Error deleting image", "error");
           });
-      }
-    }
+      }}
   
     function editMenuItem(category, id, menuItem) {
       // Redirect user to edit.html with item data to edit

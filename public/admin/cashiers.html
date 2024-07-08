@@ -49,16 +49,16 @@
 
       <div class="table">
         <div class="table-option">
-          <label for="sort" id="sort-label"
-            ><i class="ri-filter-3-line"></i>Sort</label
-          >
-          <select name="sort" id="sort">
-            <option value="ascending">Ascending</option>
-            <option value="descending">Descending</option>
-          </select>
-          <div id="custom-dropdown" class="custom-dropdown">
-            <div class="option" data-value="ascending">Ascending</div>
-            <div class="option" data-value="descending">Descending</div>
+          <div class="sort-container">
+            <label for="sort" id="sort-label"><i class="ri-filter-3-line"></i>Sort</label>
+            <select name="sort" id="sort">
+              <option value="ascending">Ascending</option>
+              <option value="descending">Descending</option>
+            </select>
+          </div>
+          <div id="searchBar" class="searchBar">
+            <i class="ri-search-2-line"></i>
+            <textarea name="search" id="search" placeholder="Search Cashier"></textarea>  
           </div>
         </div>
 
@@ -137,7 +137,7 @@
       const database = getDatabase(app);
       const storage = getStorage(app);
 
-      function fetchAndDisplayCashiers(sortOrder) {
+      function fetchAndDisplayCashiers(sortOrder, searchTerm = "") {
         const cashiersRef = ref(database, "cashiers");
 
         onValue(
@@ -159,6 +159,11 @@
                 cashierItems.sort((a, b) => a.name.localeCompare(b.name));
               } else if (sortOrder === "descending") {
                 cashierItems.sort((a, b) => b.name.localeCompare(a.name));
+              }
+
+                // Kondisi jika search dimasukkan
+              if (searchTerm) {
+                cashierItems = cashierItems.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
               }
 
               cashierItems.forEach((cashierItem) => {
@@ -229,13 +234,18 @@
       }
 
       document.addEventListener("DOMContentLoaded", () => {
-        const filterElement = document.getElementById("sort");
+        const sortElement = document.getElementById("sort");
+        const searchElement = document.getElementById('search');
 
-        filterElement.addEventListener("change", (e) => {
+        sortElement.addEventListener("change", (e) => {
           fetchAndDisplayCashiers(e.target.value);
         });
 
-        fetchAndDisplayCashiers(filterElement.value);
+        searchElement.addEventListener('input', (e) => {
+          fetchAndDisplayCashiers(sortElement.value, e.target.value);
+        });
+
+        fetchAndDisplayCashiers(sortElement.value, searchElement.value);
       });
 
       document.addEventListener("DOMContentLoaded", () => {
@@ -307,6 +317,7 @@
         setActiveMenu("cashier");
         fetchAndDisplayCashiers("");
       });
+
     </script>
   </body>
 </html>
