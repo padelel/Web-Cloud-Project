@@ -344,3 +344,7 @@ button {
 .delete-button:hover {
     background-color: #b34219;
 }
+
+#ul.cart-list li::marker {
+    content: none;
+}
